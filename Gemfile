@@ -12,3 +12,9 @@ gem "binding_of_caller", "~> 1.0"
 gem "will_paginate", "~> 3.3"
 
 gem "activesupport", "~> 7.0"
+
+gem "sinatra-activerecord", "~> 2.0"
+
+gem "sqlite3", "~> 1.5"
+
+gem "rake", "~> 13.0"

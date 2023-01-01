@@ -1,6 +1,11 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    activemodel (7.0.4)
+      activesupport (= 7.0.4)
+    activerecord (7.0.4)
+      activemodel (= 7.0.4)
+      activesupport (= 7.0.4)
     activesupport (7.0.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
@@ -38,6 +43,7 @@ GEM
     rack-protection (3.0.5)
       rack
     rainbow (3.1.1)
+    rake (13.0.6)
     redcarpet (3.5.1)
     regexp_parser (2.6.1)
     rexml (3.2.5)
@@ -63,6 +69,10 @@ GEM
       rack (~> 2.2, >= 2.2.4)
       rack-protection (= 3.0.5)
       tilt (~> 2.0)
+    sinatra-activerecord (2.0.26)
+      activerecord (>= 4.1)
+      sinatra (>= 1.0)
+    sqlite3 (1.5.4-x86_64-darwin)
     standard (1.20.0)
       language_server-protocol (~> 3.17.0.2)
       rubocop (= 1.40.0)
@@ -84,8 +94,11 @@ DEPENDENCIES
   binding_of_caller (~> 1.0)
   haml (~> 6.1)
   puma (~> 6.0)
+  rake (~> 13.0)
   redcarpet (~> 3.5)
   sinatra (~> 3.0)
+  sinatra-activerecord (~> 2.0)
+  sqlite3 (~> 1.5)
   standard (~> 1.20)
   will_paginate (~> 3.3)
 

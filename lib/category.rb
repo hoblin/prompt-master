@@ -1,27 +1,28 @@
 # Category is a directory in the inspiration folder
 # Tag is a directory in the category folder
 # Image is a file in the tag folder
-class Category < Base
-  attr_reader :name, :tags
+class Category < ActiveRecord::Base
+  has_many :tags, dependent: :destroy
+
+  validates :name, presence: true
 
   BASE_PATH = "./inspiration"
 
-  def initialize(name)
-    @name = name
+  def tags_from_directory
     path = "#{BASE_PATH}/#{name}"
-    @tags = Dir.entries(path)
+    Dir.entries(path)
       .select { |f| File.directory? File.join(path, f) }
       .reject { |f| f == "." || f == ".." }
       .sort
-      .map { |tag| Tag.new(tag, name) }
+      .map { |tag| Tag.find_or_initialize_by(name: tag, category_id: id) }
   end
 
-  def self.all
+  def self.from_directory
     Dir.entries("./inspiration")
       .select { |f| File.directory? File.join(BASE_PATH, f) }
       .reject { |f| f == "." || f == ".." }
       .sort
-      .map { |category| Category.new(category) }
+      .map { |category| Category.find_or_initialize_by(name: category) }
   end
 
   def self.find(name)

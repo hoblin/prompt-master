@@ -1,8 +1,8 @@
 # Image is a file in the tag folder
-class Image < Base
+class Image
   attr_reader :name, :path
-  def initialize(name, tag, category)
-    @path = "./inspiration/#{category}/#{tag}/#{name}"
+  def initialize(name, tag)
+    @path = "./inspiration/#{tag.category.name}/#{tag.name}/#{name}"
     @name = name
   end
 

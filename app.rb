@@ -13,7 +13,12 @@ configure :development do
 end
 
 # will_paginate config
-require 'will_paginate/array'
+require "will_paginate"
+require "will_paginate/active_record"
+WillPaginate.per_page = 20
+
+# DB config
+set :database, {adapter: "sqlite3", database: "prompt-master.sqlite3"}
 
 error do
   erb :"500"
@@ -26,14 +31,13 @@ get "/" do
 end
 
 # render index.erb with selected category
-get "/category/:category" do
-  @category = Category.find(params[:category])
-
+get "/category/:id" do
+  @category = Category.find_by_id(params[:id])
   # redirect to root if category not found
   redirect "/" if @category.nil?
 
   # paginate tags array with kaminari of the selected category
-  @tags = @category.tags.paginate page: params[:page], per_page: 20
+  @tags = @category.tags.page(params[:page]).order("name")
   haml :index, escape_html: false
 end
 
