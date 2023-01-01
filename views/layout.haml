@@ -11,17 +11,19 @@
     %link{href: "https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css", rel: "stylesheet"}
     %link{href: "/stylesheets/style.css", rel: "stylesheet", type: "text/css"}/
     %script{crossorigin: "anonymous", integrity: "sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=", src: "https://code.jquery.com/jquery-3.6.3.min.js"}
-    %script{src: "/javascripts/infinite-scroll.pkgd.min.js"}
+    -# Swiper
     %script{src: "https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"}
+    -# Infinite scroll
+    %script{src: "/javascripts/infinite-scroll.pkgd.min.js"}
+    -# Modal
+    %script{src: "https://unpkg.com/micromodal/dist/micromodal.min.js"}
+    %link{href: "/stylesheets/micromodal.css", rel: "stylesheet", type: "text/css"}/
+
     %script{src: "/javascripts/app.js"}
   %body
     #content.container
       = yield
+      = haml :modal
     #footer
-      %button.floatBtn#topBtn{onclick: "topFunction()", title: "Go to top"}
-        Top
-      %button.floatBtn#swipeLeftBtn{onclick: "swipeLeft()", title: "Left swipe"}
-        <
-      %button.floatBtn#swipeRightBtn{onclick: "swipeRight()", title: "Right swipe"}
-        >
+      = haml :buttons
       %p A Sinatra App to manage SD prompt tokens by Hoblin 2023.

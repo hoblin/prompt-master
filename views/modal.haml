@@ -1,0 +1,7 @@
+#image-modal.modal.micromodal-slide{"aria-hidden" => "true"}
+  .modal__overlay{"data-micromodal-close" => "", tabindex: "-1"}
+    .modal__container{"aria-labelledby" => "image-modal-title", "aria-modal" => "true", role: "dialog"}
+      %header.modal__header
+        %h3#image-modal-title.modal__title
+        %button.modal__close{"aria-label" => "Close modal", "data-micromodal-close" => ""}
+      %main#image-modal-content.modal__content

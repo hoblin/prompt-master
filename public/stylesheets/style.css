@@ -62,7 +62,7 @@ ul#nav li {
   padding: 0;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 260px;
+  width: 180px;
   white-space: nowrap;
 }
 
@@ -94,4 +94,11 @@ ul#nav li {
 #swipeRightBtn {
   bottom: 20px;
   left: 80px;
+}
+/* Micromodal */
+.modal {
+  display: none;
+}
+.modal.is-open {
+  display: block;
 }

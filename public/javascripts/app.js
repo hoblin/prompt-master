@@ -1,3 +1,12 @@
+// Micromodal
+const showModal = (imageUrl, tagName) => {
+  const imageContainer = document.getElementById('image-modal-content');
+  imageContainer.innerHTML = `<img src="${imageUrl}" />`;
+  const midalTitle = document.getElementById('image-modal-title');
+  midalTitle.innerHTML = tagName;
+  MicroModal.show('image-modal');
+}
+
 // Top button
 function scrollFunction(button) {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -11,14 +20,13 @@ function topFunction() {
   document.documentElement.scrollTop = 0;
 }
 
+// Swiper slider
 let allSliders;
-
 // Function that actually builds the swiper
 const buildSwiperSlider = sliderElm => {
   const sliderIdentifier = sliderElm.dataset.id;
   return new Swiper(`#${sliderElm.id}`);
 }
-
 // Init swipers on page load or when new content is added
 function initSwipers() {
   allSliders = document.querySelectorAll('.swiper');
@@ -28,9 +36,6 @@ function initSwipers() {
     }
   });
 }
-
-
-
 function swipeLeft() {
   allSliders.forEach((slider) => {
     if (slider.swiper) {
@@ -39,7 +44,6 @@ function swipeLeft() {
     }
   });
 }
-
 function swipeRight() {
   allSliders.forEach((slider) => {
     if (slider.swiper) {

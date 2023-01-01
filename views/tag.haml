@@ -3,6 +3,6 @@
     .swiper-wrapper
       - tag.images.each do |image|
         .swiper-slide
-          %img{alt: "#{tag.name}", src: "#{image.url}"}
+          %img{alt: "#{tag.name}", src: "#{image.url}", onclick: "showModal('#{image.url}', '#{tag.name}')"}
     .swiper-scrollbar
   %p{title: tag.name}= tag.name
