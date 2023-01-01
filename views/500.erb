@@ -1,0 +1,17 @@
+<div>
+  <h1>A Sinatra app to access Google+</h1>
+  <!--
+    By default error will catch Sinatra::ServerError
+    Sinatra will pass you the error via the ‘sinatra.error’ 
+    in request.env
+  -->
+  <p>
+    <% e = request.env['sinatra_error'] %>
+    <%= p e.to_s %>
+    <%= p e.backtrace.join("\n") %>
+    Application error
+  </p>
+</div>
+<div id="footer">
+  <p><b>A Fun Sinatra App for Google+ by RubyLearning 20 Sept. 2011</b>.</p>
+</div>
