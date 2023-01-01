@@ -1,0 +1,21 @@
+.row
+  .col-12
+    %h1
+      %a{href: '/'} Prompt master
+.row
+  .col-12
+    %ul#nav
+      - Category.all.map do |category|
+        %li
+          %a{href: "/category/#{category.name}"}= category.name
+- if @category
+  .row
+    .col-12
+      %h2= @category.name
+  - if @tags
+    = will_paginate @tags
+    .row{data: {'infinite-scroll': '{ "path": ".next_page", "append": ".post", "history": false, "prefill": true, "hideNav": ".pagination", "scrollThreshold": 1000 }'} }
+      - @tags.each do |tag|
+        .col-3.post
+          .tag
+            %img{alt: "#{tag.name}", src: "#{tag.image_url}"}/

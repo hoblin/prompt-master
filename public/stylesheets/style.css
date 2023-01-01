@@ -2,24 +2,37 @@
 	font-family: "Source Code Pro", "Lucida Console", Monaco, monospace;
 	background-color: #183549;
 	color: #9dffff;
-	font-size: 1 em;
+	font-size: 1em;
 }
 
 body{
-	line-height: 1.6 em;
+	line-height: 1.6em;
+  padding: 0;
+  margin: 0;
 }
 
-h1 {
+h1, h2, h3, h4, h5, h6 {
   color: #ffc600;
-	text-decoration: underline;
-	font-size: 1.5 em;
+	font-size: 1.5em;
 }
 
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: #ffc600;
+  text-decoration: underline;
+}
 h2 {
-  color: #ffc600;
-  font-size: 1.2 em;
+  font-size: 1.2em;
 }
-
+ul#nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ul#nav li {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
 #footer {
   clear: both;
   border-top: 1px solid #ffb454;
@@ -28,4 +41,35 @@ h2 {
   height: 50px;
   font-size: 70%;
   width: 100%;
+}
+#footer * {
+  color: #9ef68d;
+}
+.tag img {
+  border: 1px solid #ffb454;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  width: 200px;
+}
+/* Top button */
+#topBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: #183549;
+  color: #9ef68d;
+  border: 1px solid #ffb454;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+#topBtn:hover {
+  background-color: #555;
 }

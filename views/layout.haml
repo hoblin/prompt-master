@@ -1,0 +1,21 @@
+!!! 5
+%html
+  %head
+    %title Prompt master
+    %meta{content: "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %meta{content: "sd.hobl.in", name: "description"}/
+    %meta{content: "StableDiffusion prompt keywords tags", name: "keywords"}/
+    %link{href: "https://fonts.cdnfonts.com/css/source-code-pro", rel: "stylesheet"}
+    %link{href: "/stylesheets/simple-grid.min.css", rel: "stylesheet", type: "text/css"}/
+    %link{href: "/stylesheets/style.css", rel: "stylesheet", type: "text/css"}/
+    %link{href: "/images/favicon.ico", rel: "icon", type: "image/ico"}/
+    %script{crossorigin: "anonymous", integrity: "sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=", src: "https://code.jquery.com/jquery-3.6.3.min.js"}
+    %script{src: "/javascripts/app.js"}
+    %script{src: "/javascripts/infinite-scroll.pkgd.min.js"}
+  %body
+    #content.container
+      = yield
+    #footer
+      %button#topBtn{onclick: "topFunction()", title: "Go to top"}
+        Top
+      %p A Sinatra App to manage SD prompt tokens by Hoblin 2023.
