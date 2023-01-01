@@ -25,7 +25,9 @@ let allSliders;
 // Function that actually builds the swiper
 const buildSwiperSlider = sliderElm => {
   const sliderIdentifier = sliderElm.dataset.id;
-  return new Swiper(`#${sliderElm.id}`);
+  return new Swiper(`#${sliderElm.id}`, {
+    loop: true,
+  });
 }
 // Init swipers on page load or when new content is added
 function initSwipers() {
@@ -68,7 +70,7 @@ $(document).ready(function () {
     if (items.length > 0) {
       allSliders.forEach((slider) => {
         if (slider.swiper) {
-          slider.swiper.slideTo(0);
+          slider.swiper.slideToLoop(0);
         }
       });
       initSwipers();
