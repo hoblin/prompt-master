@@ -17,5 +17,4 @@
     .row{data: {'infinite-scroll': '{ "path": ".next_page", "append": ".post", "history": false, "prefill": true, "hideNav": ".pagination", "scrollThreshold": 1000 }'} }
       - @tags.each do |tag|
         .col-3.post
-          .tag
-            %img{alt: "#{tag.name}", src: "#{tag.image_url}"}/
+          = haml :tag, locals: {tag: tag}

@@ -9,6 +9,7 @@ class Tag < Base
     # collect images from the tag folder
     @images = Dir.entries(path)
       .select { |f| File.file? File.join(path, f) }
+      .sort
       .map { |image| Image.new(image) }
   end
 

@@ -1,6 +1,5 @@
 * {
 	font-family: "Source Code Pro", "Lucida Console", Monaco, monospace;
-	background-color: #183549;
 	color: #9dffff;
 	font-size: 1em;
 }
@@ -9,6 +8,7 @@ body{
 	line-height: 1.6em;
   padding: 0;
   margin: 0;
+	background-color: #183549;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -45,13 +45,27 @@ ul#nav li {
 #footer * {
   color: #9ef68d;
 }
-.tag img {
+.tag {
   border: 1px solid #ffb454;
+  margin: 5px;
+  padding: 5px;
+  background-color: #15232d;
+}
+.tag img {
   margin: 0;
   padding: 0;
   vertical-align: middle;
-  width: 200px;
+  width: 100%;
 }
+.tag p {
+  margin: 5px 0 0;
+  padding: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 160px;
+  white-space: nowrap;
+}
+
 /* Top button */
 #topBtn {
   display: none;

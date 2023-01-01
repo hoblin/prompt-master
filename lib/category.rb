@@ -12,6 +12,7 @@ class Category < Base
     @tags = Dir.entries(path)
       .select { |f| File.directory? File.join(path, f) }
       .reject { |f| f == "." || f == ".." }
+      .sort
       .map { |tag| Tag.new(tag, name) }
   end
 
@@ -19,6 +20,7 @@ class Category < Base
     Dir.entries("./inspiration")
       .select { |f| File.directory? File.join(BASE_PATH, f) }
       .reject { |f| f == "." || f == ".." }
+      .sort
       .map { |category| Category.new(category) }
   end
 
