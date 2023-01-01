@@ -1,3 +1,5 @@
+require 'active_support/core_ext/string/inflections'
+
 # Tag is a directory in the category folder
 # Image is a file in the tag folder
 class Tag < Base
@@ -10,12 +12,10 @@ class Tag < Base
     @images = Dir.entries(path)
       .select { |f| File.file? File.join(path, f) }
       .sort
-      .map { |image| Image.new(image) }
+      .map { |image| Image.new(image, name, category) }
   end
 
-  # returns url to the first image in tag dir
-  def image_url
-    return nil if images.empty?
-    path.gsub("./", "/") + "/" + images.first.name
+  def tag_name
+    name.parameterize
   end
 end

@@ -10,3 +10,5 @@ gem "standard", "~> 1.20"
 gem "better_errors", "~> 2.9"
 gem "binding_of_caller", "~> 1.0"
 gem "will_paginate", "~> 3.3"
+
+gem "activesupport", "~> 7.0"

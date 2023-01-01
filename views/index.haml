@@ -16,5 +16,5 @@
     = will_paginate @tags
     .row{data: {'infinite-scroll': '{ "path": ".next_page", "append": ".post", "history": false, "prefill": true, "hideNav": ".pagination", "scrollThreshold": 1000 }'} }
       - @tags.each do |tag|
-        .col-3.post
+        .col-4.post
           = haml :tag, locals: {tag: tag}

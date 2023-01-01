@@ -1,4 +1,4 @@
-
+// Top button
 function scrollFunction(button) {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     button.style.display = "block";
@@ -6,18 +6,71 @@ function scrollFunction(button) {
     button.style.display = "none";
   }
 }
-
-// When the user clicks on the button, scroll to the top of the document
 function topFunction() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 }
 
+let allSliders;
+
+// Function that actually builds the swiper
+const buildSwiperSlider = sliderElm => {
+  const sliderIdentifier = sliderElm.dataset.id;
+  return new Swiper(`#${sliderElm.id}`);
+}
+
+// Init swipers on page load or when new content is added
+function initSwipers() {
+  allSliders = document.querySelectorAll('.swiper');
+  allSliders.forEach((slider) => {
+    if (slider.swiper === undefined) {
+      slider.swiper = buildSwiperSlider(slider);
+    }
+  });
+}
+
+
+
+function swipeLeft() {
+  allSliders.forEach((slider) => {
+    if (slider.swiper) {
+      console.log('swiping left');
+      slider.swiper.slidePrev();
+    }
+  });
+}
+
+function swipeRight() {
+  allSliders.forEach((slider) => {
+    if (slider.swiper) {
+      console.log('swiping right');
+      slider.swiper.slideNext();
+    }
+  });
+}
+
 // on load
 $(document).ready(function () {
-  // Get the button
+  // Top button
   let topButton = document.getElementById("topBtn");
-
-  // When the user scrolls down 20px from the top of the document, show the button
   window.onscroll = function () { scrollFunction(topButton) };
+
+  // Swiper slider init
+  initSwipers();
+
+  // Listen for infinite scroll events and re-init swipers
+  $(document).on('append.infiniteScroll', function (event, body, path, items, response) {
+    // Rollback all swipers if there are elements added to the page
+    if (items.length > 0) {
+      allSliders.forEach((slider) => {
+        if (slider.swiper) {
+          slider.swiper.slideTo(0);
+        }
+      });
+      initSwipers();
+    }
+  });
 });
+
+
+

@@ -1,3 +1,8 @@
 .tag
-  %img{alt: "#{tag.name}", src: "#{tag.image_url}"}/
+  .swiper{id: tag.tag_name, data: { id: tag.tag_name }}
+    .swiper-wrapper
+      - tag.images.each do |image|
+        .swiper-slide
+          %img{alt: "#{tag.name}", src: "#{image.url}"}
+    .swiper-scrollbar
   %p{title: tag.name}= tag.name

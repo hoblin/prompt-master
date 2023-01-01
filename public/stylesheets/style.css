@@ -62,19 +62,14 @@ ul#nav li {
   padding: 0;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 160px;
+  width: 260px;
   white-space: nowrap;
 }
 
-/* Top button */
-#topBtn {
-  display: none;
+.floatBtn {
   position: fixed;
-  bottom: 20px;
-  right: 30px;
   z-index: 99;
   font-size: 18px;
-  border: none;
   outline: none;
   background-color: #183549;
   color: #9ef68d;
@@ -83,7 +78,20 @@ ul#nav li {
   padding: 15px;
   border-radius: 4px;
 }
-
+/* Top button */
+#topBtn {
+  display: none;
+  bottom: 20px;
+  right: 30px;
+}
 #topBtn:hover {
-  background-color: #555;
+  background-color: #15232d;
+}
+#swipeLeftBtn {
+  bottom: 20px;
+  left: 30px;
+}
+#swipeRightBtn {
+  bottom: 20px;
+  left: 80px;
 }
