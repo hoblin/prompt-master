@@ -44,14 +44,34 @@
   color: #ffc600;
   box-sizing: border-box;
 }
-
-.modal__close {
-  background: #15232d;
-  color: #9ef68d;
-  border: 0;
+.noSelect {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-.modal__header .modal__close:before { content: "\2715"; }
+.noSelect:focus {
+  outline: none !important;
+}
+.modal__header button {
+  background: #183549;
+  color: #ffb454;
+  border: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.modal__header button:hover {
+  background: #15232d;
+}
+.modal__header button:active, .modal__header button:active i {
+  color: #ffc600
+}
+.modal__header button i{
+  color: #ffb454;
+}
 
 .modal__content {
   margin-top: 2rem;

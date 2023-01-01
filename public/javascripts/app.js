@@ -74,6 +74,9 @@ $(document).ready(function () {
       initSwipers();
     }
   });
+
+  // Init clipboard
+   new ClipboardJS('.modal__copy');
 });
 
 
