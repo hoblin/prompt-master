@@ -1,11 +1,6 @@
-* {
-  font-family: "Source Code Pro", "Lucida Console", Monaco, monospace;
-  color: #9dffff;
-  font-size: 1em;
-}
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 
 body {
-  line-height: 1.6em;
   padding: 0;
   margin: 0;
   background-color: #183549;
@@ -13,6 +8,11 @@ body {
 input[type="text"] {
   background-color: #15232d;
   color: #ffb454;
+}
+* {
+  font-family: "Source Code Pro", monospace;
+  color: #9dffff;
+  font-size: 1rem;
 }
 
 h1,
@@ -22,21 +22,19 @@ h4,
 h5,
 h6 {
   color: #ffc600;
-  font-size: 1.5em;
+  font-weight: 500;
 }
 
-h1 a,
-h2 a,
-h3 a,
-h4 a,
-h5 a,
-h6 a {
-  color: #ffc600;
+a h1,
+a h2,
+a h3,
+a h4,
+a h5,
+a h6 {
+  color: #ffb454;
   text-decoration: underline;
 }
-h2 {
-  font-size: 1.2em;
-}
+
 ul.nav {
   list-style-type: none;
   margin: 0;
@@ -47,8 +45,30 @@ ul.nav li {
   margin: 0;
   padding: 0;
 }
+ul.nav li a {
+  color: #ffb454;
+  font-size: 1.2rem;
+  font-weight: 300;
+  text-transform: capitalize;
+  text-decoration: none;
+  margin: 0 5px;
+}
+ul.nav li a:hover {
+  color: #ffc600;
+}
 ul.fa-ul.nav li {
   margin: 0 20px;
+}
+ul.fa-ul.nav li a {
+  text-transform: none;
+  line-height: 1.4;
+}
+h4.category {
+  text-transform: uppercase;
+  font-weight: 300;
+  line-height: 1.4;
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 #footer {
   clear: both;
@@ -56,7 +76,6 @@ ul.fa-ul.nav li {
   color: #9ef68d;
   text-align: left;
   height: 50px;
-  font-size: 70%;
   width: 100%;
 }
 #footer * {
@@ -86,7 +105,6 @@ ul.fa-ul.nav li {
 .floatBtn {
   position: fixed;
   z-index: 99;
-  font-size: 18px;
   outline: none;
   background-color: #183549;
   color: #9ef68d;
@@ -123,9 +141,10 @@ ul.fa-ul.nav li {
   color: #ffb454;
   background-color: #183549;
 }
-#tag-collection button:hover, #tag-collection button:hover i {
- color: #ffc600;
- background-color: #15232d;
+#tag-collection button:hover,
+#tag-collection button:hover i {
+  color: #ffc600;
+  background-color: #15232d;
 }
 /* Micromodal */
 .modal {

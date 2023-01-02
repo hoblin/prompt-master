@@ -15,10 +15,13 @@ end
 # will_paginate config
 require "will_paginate"
 require "will_paginate/active_record"
-WillPaginate.per_page = 20
+WillPaginate.per_page = 60
 
 # DB config
 set :database, {adapter: "sqlite3", database: "prompt-master.sqlite3"}
+
+# set port
+set :port, 8080
 
 error do
   erb :"500"

@@ -137,16 +137,22 @@ function initSwipers() {
 }
 function swipeLeft() {
   allSliders.forEach((slider) => {
-    if (slider.swiper) {
-      console.log("swiping left");
+    if (
+      slider.swiper !== undefined &&
+      slider.swiper !== null &&
+      slider.swiper.slidePrev !== undefined
+    ) {
       slider.swiper.slidePrev();
     }
   });
 }
 function swipeRight() {
   allSliders.forEach((slider) => {
-    if (slider.swiper) {
-      console.log("swiping right");
+    if (
+      slider.swiper !== undefined &&
+      slider.swiper !== null &&
+      slider.swiper.slideNext !== undefined
+    ) {
       slider.swiper.slideNext();
     }
   });
@@ -160,6 +166,25 @@ $(document).ready(function () {
     scrollFunction(topButton);
   };
 
+  // Infinite scroll init
+  let elem = document.querySelector("#infinite-scroll");
+  let infScroll = new InfiniteScroll(elem, {
+    // options
+    path: ".next_page",
+    append: ".tag-container",
+    history: false,
+    prefill: true,
+    hideNav: ".pagination",
+    scrollThreshold: 500,
+    onError: function (msg) {
+      console.error(msg);
+    },
+  });
+
+  $(elem).on("error.infiniteScroll", function (event, error, path, response) {
+    console.error(`Could not load: ${path}. ${error}`);
+  });
+
   // Swiper slider init
   initSwipers();
 
@@ -170,7 +195,11 @@ $(document).ready(function () {
       // Rollback all swipers if there are elements added to the page
       if (items.length > 0) {
         allSliders.forEach((slider) => {
-          if (slider.swiper) {
+          if (
+            slider.swiper !== undefined &&
+            slider.swiper !== null &&
+            slider.swiper.slideToLoop !== undefined
+          ) {
             slider.swiper.slideToLoop(0);
           }
         });

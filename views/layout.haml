@@ -2,14 +2,11 @@
 %html
   %head
     %title Prompt master
+    %meta{content: "width=device-width, initial-scale=1", name: "viewport"}/
     %meta{content: "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
     %meta{content: "sd.hobl.in", name: "description"}/
     %meta{content: "StableDiffusion prompt keywords tags", name: "keywords"}/
     %link{href: "/images/favicon.ico", rel: "icon", type: "image/ico"}/
-    %link{href: "https://fonts.cdnfonts.com/css/source-code-pro", rel: "stylesheet"}
-    %link{href: "/stylesheets/simple-grid.min.css", rel: "stylesheet", type: "text/css"}/
-    %link{href: "https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css", rel: "stylesheet"}
-    %link{href: "/stylesheets/style.css", rel: "stylesheet", type: "text/css"}/
     %script{crossorigin: "anonymous", integrity: "sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=", src: "https://code.jquery.com/jquery-3.6.3.min.js"}
     -# Swiper
     %script{src: "https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"}
@@ -22,6 +19,11 @@
     %script{src: "https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"}
     -# fontawesome
     %script{crossorigin: "anonymous", src: "https://kit.fontawesome.com/08b1825a15.js"}
+    %link{href: "https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css", rel: "stylesheet"}
+    -# Bootstrap 5
+    %link{crossorigin: "anonymous", href: "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css", integrity: "sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC", rel: "stylesheet"}/
+    %script{crossorigin: "anonymous", integrity: "sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM", src: "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"}
+    %link{href: "/stylesheets/style.css", rel: "stylesheet", type: "text/css"}/
     %script{src: "/javascripts/app.js"}
   %body
     #content.container
