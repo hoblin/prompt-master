@@ -45,6 +45,11 @@ const showModal = (imageUrl, tagJson) => {
       success: function (result) {
         hideButton.style.display = "none";
         unhideButton.style.display = "inline-block";
+        // remove tag block from page with parent
+        const tagBlock = document.getElementById(`tag-${tag.id}`);
+        tagBlock.parentElement.remove();
+        // close modal
+        MicroModal.close("image-modal");
       },
     });
   };
@@ -55,6 +60,11 @@ const showModal = (imageUrl, tagJson) => {
       success: function (result) {
         hideButton.style.display = "inline-block";
         unhideButton.style.display = "none";
+        // remove tag block from page
+        const tagBlock = document.getElementById(`tag-${tag.id}`);
+        tagBlock.parentElement.remove();
+        // close modal
+        MicroModal.close("image-modal");
       },
     });
   };
