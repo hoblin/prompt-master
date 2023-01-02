@@ -1,5 +1,5 @@
 require "rack/unreloader"
-require_relative "prompt_master.rb"
+require_relative "prompt_master"
 
 use Rack::Logger
 
