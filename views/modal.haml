@@ -4,6 +4,14 @@
       %header.modal__header
         %h3#image-modal-title.modal__title
         .actions
+          %button#image-modal-featured.noSelect
+            %i.fa-regular.fa-heart
+          %button#image-modal-unfeatured.noSelect
+            %i.fa-solid.fa-heart
+          %button#image-modal-hide.noSelect
+            %i.fa-regular.fa-eye-slash
+          %button#image-modal-unhide.noSelect
+            %i.fa-solid.fa-eye-slash
           %button.modal__copy.noSelect{data: {'clipboard-target': '#image-modal-title'}}
             %i.fa-solid.fa-copy
           %button.modal__close.noSelect{"aria-label" => "Close modal", "data-micromodal-close" => ""}

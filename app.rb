@@ -24,21 +24,87 @@ error do
   erb :"500"
 end
 
-get "/" do
-  @categories = Category.all
+get "/:mode?" do
+  @categories = case params[:mode]
+  when "featured"
+    Category.featured
+  when "hidden"
+    Category.hidden
+  else
+    Category.all
+  end
 
   haml :index, escape_html: false
 end
 
 # render index.erb with selected category
-get "/category/:id" do
+get "/category/:id/:mode?" do
   @category = Category.find_by_id(params[:id])
   # redirect to root if category not found
   redirect "/" if @category.nil?
 
   # paginate tags array with kaminari of the selected category
-  @tags = @category.tags.page(params[:page]).order("name")
+  @tags = case params[:mode]
+  when "featured"
+    @category.tags.featured
+  when "hidden"
+    @category.tags.hidden
+  else
+    @category.tags.active
+  end.order("name").page(params[:page])
   haml :index, escape_html: false
+end
+
+# add tag to featured tags
+put "/tag/:id/feature" do
+  content_type :json
+
+  @tag = Tag.find_by_id(params[:id])
+  # respond with error if tag not found
+  return {success: false, error: "Tag not found"}.to_json if @tag.nil?
+
+  # add tag to featured tags
+  @tag.update(featured: true)
+  {success: true}.to_json
+end
+
+# remove tag from featured tags
+put "/tag/:id/unfeature" do
+  content_type :json
+
+  @tag = Tag.find_by_id(params[:id])
+  # respond with error if tag not found
+  return {success: false, error: "Tag not found"}.to_json if @tag.nil?
+
+  # remove tag from featured tags
+  @tag.update(featured: false)
+  {success: true}.to_json
+end
+
+# hide tag
+put "/tag/:id/hide" do
+  content_type :json
+
+  @tag = Tag.find_by_id(params[:id])
+  # respond with error if tag not found
+  return {success: false, error: "Tag not found"}.to_json if @tag.nil?
+
+  # hide tag
+  @tag.update(active: false)
+  {success: true}.to_json
+end
+
+# unhide tag
+put "/tag/:id/unhide" do
+  content_type :json
+
+  @tag = Tag.find_by_id(params[:id])
+  # respond with error if tag not found
+  return {success: false, error: "Tag not found"}.to_json if @tag.nil?
+
+  # unhide tag
+  @tag.update(active: true)
+  {success: true}.to_json
 end
 
 # serve static files from inspiration folder

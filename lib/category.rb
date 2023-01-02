@@ -6,6 +6,10 @@ class Category < ActiveRecord::Base
 
   validates :name, presence: true
 
+  scope :active, -> { where(active: true) }
+  scope :hidden, -> { where(active: false) }
+  scope :featured, -> { where(featured: true) }
+
   BASE_PATH = "./inspiration"
 
   def tags_from_directory

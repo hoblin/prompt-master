@@ -4,14 +4,25 @@
       %a{href: '/'} Prompt master
 .row
   .col-12
-    %ul#nav
+    %ul.nav
       - Category.all.map do |category|
         %li
-          %a{href: "/category/#{category.id}"}= category.name
+          %a{href: "/category/#{category.id}/"}= category.name
 - if @category
   .row
-    .col-12
-      %h2= @category.name
+    .col-8
+      %h2
+        %a{href: "/category/#{@category.id}/"}= @category.name
+    .col-4
+      %ul.fa-ul.nav
+        %li
+          %span.fa-li
+            %i.fa-heart{class: (params[:mode] == "featured" ? 'fa-solid' : 'fa-regular')}
+          %a{href: "/category/#{@category.id}/featured"} Featured
+        %li
+          %span.fa-li
+            %i.fa-eye-slash{class: (params[:mode] == "hidden" ? 'fa-solid' : 'fa-regular')}
+          %a{href: "/category/#{@category.id}/hidden"} Hidden
   - if @tags
     = will_paginate @tags
     .row{data: {'infinite-scroll': '{ "path": ".next_page", "append": ".post", "history": false, "prefill": true, "hideNav": ".pagination", "scrollThreshold": 1000 }'} }

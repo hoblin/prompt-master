@@ -7,6 +7,10 @@ class Tag < ActiveRecord::Base
 
   validates :name, presence: true
 
+  scope :active, -> { where(active: true) }
+  scope :hidden, -> { where(active: false) }
+  scope :featured, -> { where(featured: true) }
+
   def images
     @images ||= Dir.entries(path)
       .select { |f| File.file? File.join(path, f) }
