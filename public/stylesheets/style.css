@@ -10,6 +10,10 @@ body {
   margin: 0;
   background-color: #183549;
 }
+input[type="text"] {
+  background-color: #15232d;
+  color: #ffb454;
+}
 
 h1,
 h2,
@@ -107,6 +111,21 @@ ul.fa-ul.nav li {
 #swipeRightBtn {
   bottom: 20px;
   left: 80px;
+}
+#tag-collection {
+  top: 20px;
+  left: 30px;
+}
+#tag-collection input[type="text"],
+#tag-collection button,
+#tag-collection button i {
+  border: 0;
+  color: #ffb454;
+  background-color: #183549;
+}
+#tag-collection button:hover, #tag-collection button:hover i {
+ color: #ffc600;
+ background-color: #15232d;
 }
 /* Micromodal */
 .modal {

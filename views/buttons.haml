@@ -4,3 +4,10 @@
   <
 %button.floatBtn#swipeRightBtn{onclick: "swipeRight()", title: "Right swipe"}
   >
+-# Floating field to store comma-separated collected tags
+#tag-collection.floatBtn{style: "display: none;"}
+  %input.noSelect#tag-collection-input{type: "text"}
+  %button#tag-collection-copy.noSelect{data: {'clipboard-target': '#tag-collection-input'}}
+    %i.fa-solid.fa-copy
+  %button#tag-collection-clear.noSelect
+    %i.fa-regular.fa-trash-can

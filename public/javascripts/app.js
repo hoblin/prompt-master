@@ -1,3 +1,27 @@
+// Tags collection.
+// Once collect-tag button pressed textfield appears and tag is added to that comma-separated collection.
+let tagCollection = [];
+// accepts JSON string with tag data
+const collectTag = (tag) => {
+  const tagData = JSON.parse(tag);
+  const tagCollectionFloat = document.getElementById("tag-collection");
+  // display float block if it's hidden
+  tagCollectionFloat.style.display = "inline-block";
+  const tagCollectionInput = document.getElementById("tag-collection-input");
+  // add tag to collection
+  tagCollection.push(tagData.name);
+  // update textfield
+  tagCollectionInput.value = tagCollection.join(", ");
+};
+// clean collection
+const cleanCollection = () => {
+  const tagCollectionFloat = document.getElementById("tag-collection");
+  const tagCollectionInput = document.getElementById("tag-collection-input");
+  tagCollection = [];
+  tagCollectionInput.value = "";
+  tagCollectionFloat.style.display = "none";
+};
+
 // Micromodal
 const showModal = (imageUrl, tagJson) => {
   const tag = JSON.parse(tagJson);
@@ -67,6 +91,13 @@ const showModal = (imageUrl, tagJson) => {
         MicroModal.close("image-modal");
       },
     });
+  };
+
+  // Init button to collect tag
+  const collectButton = document.getElementById("image-modal-collect-tag");
+  collectButton.onclick = () => {
+    collectTag(tagJson);
+    MicroModal.close("image-modal");
   };
 
   // Show modal
@@ -147,6 +178,14 @@ $(document).ready(function () {
       }
     }
   );
+
+  // init button to clean collection
+  const cleanCollectionButton = document.getElementById("tag-collection-clear");
+  cleanCollectionButton.onclick = () => {
+    cleanCollection();
+  };
+  // init button to copy collection to clipboard
+  new ClipboardJS("#tag-collection-copy");
 
   // Init clipboard
   new ClipboardJS(".modal__copy");
