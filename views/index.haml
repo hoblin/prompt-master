@@ -6,23 +6,23 @@
   .col-12
     %ul.nav
       - Category.all.map do |category|
-        %li
-          %a{href: "/category/#{category.id}/"}= category.name
+        %li.nav-item
+          %a.nav-link{href: "/category/#{category.id}/", class: (params[:id].to_i == category.id ? 'active' : '')}= category.name
 - if @category
   .row
-    .col-8
+    .col
       %a{href: "/category/#{@category.id}/"}
         %h4.category= @category.name
-    .col-4
-      %ul.fa-ul.nav
-        %li
-          %span.fa-li
+    .col
+      %ul.fa-ul.nav.filters.float-end
+        %li.nav-item
+          %a.nav-link{href: "/category/#{@category.id}/featured", class: (params[:mode] == "featured" ? 'active' : '')}
             %i.fa-heart{class: (params[:mode] == "featured" ? 'fa-solid' : 'fa-regular')}
-          %a{href: "/category/#{@category.id}/featured"} Featured
+            %span.d-none.d-sm-inline Featured
         %li
-          %span.fa-li
+          %a.nav-link{href: "/category/#{@category.id}/hidden", class: (params[:mode] == "hidden" ? 'active' : '')}
             %i.fa-eye-slash{class: (params[:mode] == "hidden" ? 'fa-solid' : 'fa-regular')}
-          %a{href: "/category/#{@category.id}/hidden"} Hidden
+            %span.d-none.d-sm-inline Hidden
   - if @tags
     = will_paginate @tags
     .row.row-cols-2.row-cols-sm-2.row-cols-md-4#infinite-scroll

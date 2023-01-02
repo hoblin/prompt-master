@@ -22,6 +22,7 @@ GEM
     concurrent-ruby (1.1.10)
     debug_inspector (1.1.0)
     erubi (1.12.0)
+    foreman (0.87.2)
     haml (6.1.1)
       temple (>= 0.8.2)
       thor
@@ -30,6 +31,7 @@ GEM
       concurrent-ruby (~> 1.0)
     json (2.6.3)
     language_server-protocol (3.17.0.2)
+    mini_portile2 (2.8.1)
     minitest (5.17.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
@@ -40,8 +42,11 @@ GEM
     puma (6.0.1)
       nio4r (~> 2.0)
     rack (2.2.5)
+    rack-livereload (0.3.17)
+      rack
     rack-protection (3.0.5)
       rack
+    rack-unreloader (2.0.0)
     rainbow (3.1.1)
     rake (13.0.6)
     redcarpet (3.5.1)
@@ -72,7 +77,8 @@ GEM
     sinatra-activerecord (2.0.26)
       activerecord (>= 4.1)
       sinatra (>= 1.0)
-    sqlite3 (1.5.4-x86_64-darwin)
+    sqlite3 (1.5.4)
+      mini_portile2 (~> 2.8.0)
     standard (1.20.0)
       language_server-protocol (~> 3.17.0.2)
       rubocop (= 1.40.0)
@@ -87,13 +93,17 @@ GEM
 
 PLATFORMS
   x86_64-darwin-21
+  x86_64-darwin-22
 
 DEPENDENCIES
   activesupport (~> 7.0)
   better_errors (~> 2.9)
   binding_of_caller (~> 1.0)
+  foreman (~> 0.87.2)
   haml (~> 6.1)
   puma (~> 6.0)
+  rack-livereload (~> 0.3.17)
+  rack-unreloader (~> 2.0)
   rake (~> 13.0)
   redcarpet (~> 3.5)
   sinatra (~> 3.0)
@@ -103,4 +113,4 @@ DEPENDENCIES
   will_paginate (~> 3.3)
 
 BUNDLED WITH
-   2.3.17
+   2.4.1

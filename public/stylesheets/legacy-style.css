@@ -1,0 +1,159 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #183549;
+}
+input[type="text"] {
+  background-color: #15232d;
+  color: #ffb454;
+}
+* {
+  font-family: --bs-font-sans-serif;
+  color: #9dffff;
+  font-size: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #ffc600;
+  font-weight: 500;
+}
+
+a h1,
+a h2,
+a h3,
+a h4,
+a h5,
+a h6 {
+  color: #ffb454;
+  text-decoration: underline;
+}
+
+ul.nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ul.nav li {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+ul.nav li a {
+  color: #ffb454;
+  font-size: 1.2rem;
+  font-weight: 300;
+  text-transform: capitalize;
+  text-decoration: none;
+  margin: 0 5px;
+}
+ul.nav li a:hover {
+  color: #ffc600;
+}
+ul.fa-ul.nav li {
+  margin: 0 20px;
+}
+ul.fa-ul.nav li a {
+  text-transform: none;
+  line-height: 1.4;
+}
+h4.category {
+  text-transform: uppercase;
+  font-weight: 300;
+  line-height: 1.4;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+#footer {
+  clear: both;
+  border-top: 1px solid #ffb454;
+  color: #9ef68d;
+  text-align: left;
+  height: 50px;
+  width: 100%;
+}
+#footer * {
+  color: #9ef68d;
+}
+.tag {
+  border: 1px solid #ffb454;
+  margin: 5px;
+  padding: 5px;
+  background-color: #15232d;
+}
+.tag img {
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  width: 100%;
+}
+.tag p {
+  margin: 5px 0 0;
+  padding: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 10rem;
+  white-space: nowrap;
+}
+
+.floatBtn {
+  position: fixed;
+  z-index: 99;
+  outline: none;
+  background-color: #183549;
+  color: #9ef68d;
+  border: 1px solid #ffb454;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+}
+/* Top button */
+#topBtn {
+  display: none;
+  bottom: 20px;
+  right: 30px;
+}
+#topBtn:hover {
+  background-color: #15232d;
+}
+#swipeLeftBtn {
+  bottom: 20px;
+  left: 30px;
+}
+#swipeRightBtn {
+  bottom: 20px;
+  left: 80px;
+}
+#tag-collection {
+  top: 20px;
+  left: 30px;
+}
+#tag-collection input[type="text"],
+#tag-collection button,
+#tag-collection button i {
+  border: 0;
+  color: #ffb454;
+  background-color: #183549;
+}
+#tag-collection button:hover,
+#tag-collection button:hover i {
+  color: #ffc600;
+  background-color: #15232d;
+}
+#image-modal-content img {
+  width: 100%;
+  height: auto;
+}
+
+/* Modal */
+.modal-content {
+  background-color: --bs-light;
+  color: --bs-cyan;
+  border-color: --bs-orange;
+}

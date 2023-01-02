@@ -22,15 +22,16 @@ const cleanCollection = () => {
   tagCollectionFloat.style.display = "none";
 };
 
-// Micromodal
+// Bootstrap 5 modal
+let imageModal;
 const showModal = (imageUrl, tagJson) => {
   const tag = JSON.parse(tagJson);
   // Set image
   const imageContainer = document.getElementById("image-modal-content");
   imageContainer.innerHTML = `<img src="${imageUrl}" />`;
   // Set title
-  const midalTitle = document.getElementById("image-modal-title");
-  midalTitle.innerHTML = tag.name;
+  const modalTitle = document.getElementById("image-modal-title");
+  modalTitle.innerHTML = tag.name;
   // Init featured button
   const featuredButton = document.getElementById("image-modal-featured");
   const unfeaturedButton = document.getElementById("image-modal-unfeatured");
@@ -73,7 +74,7 @@ const showModal = (imageUrl, tagJson) => {
         const tagBlock = document.getElementById(`tag-${tag.id}`);
         tagBlock.parentElement.remove();
         // close modal
-        MicroModal.close("image-modal");
+        imageModal.hide();
       },
     });
   };
@@ -88,7 +89,7 @@ const showModal = (imageUrl, tagJson) => {
         const tagBlock = document.getElementById(`tag-${tag.id}`);
         tagBlock.parentElement.remove();
         // close modal
-        MicroModal.close("image-modal");
+        imageModal.hide();
       },
     });
   };
@@ -97,11 +98,11 @@ const showModal = (imageUrl, tagJson) => {
   const collectButton = document.getElementById("image-modal-collect-tag");
   collectButton.onclick = () => {
     collectTag(tagJson);
-    MicroModal.close("image-modal");
+    imageModal.hide();
   };
 
   // Show modal
-  MicroModal.show("image-modal");
+  imageModal.show();
 };
 
 // Top button
@@ -160,6 +161,14 @@ function swipeRight() {
 
 // on load
 $(document).ready(function () {
+  // Init Bootstrap modal
+  if (imageModal === undefined) {
+    imageModal = new bootstrap.Modal(
+      document.getElementById("image-modal"),
+      {}
+    );
+  }
+
   // Top button
   let topButton = document.getElementById("topBtn");
   window.onscroll = function () {
@@ -217,5 +226,5 @@ $(document).ready(function () {
   new ClipboardJS("#tag-collection-copy");
 
   // Init clipboard
-  new ClipboardJS(".modal__copy");
+  new ClipboardJS(".modal-copy");
 });

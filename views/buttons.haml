@@ -1,9 +1,10 @@
-%button.floatBtn#topBtn{onclick: "topFunction()", title: "Go to top"}
+%button.btn.btn-primary.floatBtn#topBtn{onclick: "topFunction()", title: "Go to top"}
   Top
-%button.floatBtn#swipeLeftBtn{onclick: "swipeLeft()", title: "Left swipe"}
-  <
-%button.floatBtn#swipeRightBtn{onclick: "swipeRight()", title: "Right swipe"}
-  >
+#swipe-buttons.btn-group{role: "group"}
+  %button.btn.btn-primary.floatBtn#swipeLeftBtn{onclick: "swipeLeft()", title: "Left swipe"}
+    <
+  %button.btn.btn-primary.floatBtn#swipeRightBtn{onclick: "swipeRight()", title: "Right swipe"}
+    >
 -# Floating field to store comma-separated collected tags
 #tag-collection.floatBtn{style: "display: none;"}
   %input.noSelect#tag-collection-input{type: "text"}
