@@ -1,8 +1,11 @@
-.tag{id: "tag-#{tag.id}"}
+.tag{id: "tag-#{tag.id}", class: "#{tag.featured ? 'featured' : ''} #{tag.hidden ? 'hidden' : ''}"}
   .swiper{id: tag.tag_name, data: { id: tag.tag_name }}
     .swiper-wrapper
       - tag.images.each do |image|
         .swiper-slide
           %img{alt: "#{tag.name}", src: "#{image.url}", onclick: "showModal('#{image.url}', '#{tag.to_json}')"}
     .swiper-scrollbar
-  %p{title: tag.name}= tag.name
+  .tag-footer.d-flex.justify-content-between
+    .tag-name= tag.name
+    .tag-footer-icons
+      %i.fa-solid.fa-heart

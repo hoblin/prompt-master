@@ -143,7 +143,20 @@ h4.category
   width: 100%
   height: auto
 
-.modal-header button i
-  color: $orange
-#image-modal-unfeatured i, #image-modal-unhide i
+.modal
+  & button i
+    color: $orange
+  & button.image-modal-unfeatured i, button.image-modal-unhide i
+    color: $pink
+.modal-title
+  color: $teal
+  font-weight: 500
+.modal-footer
+  justify-content: space-between
+// Tag
+.tag .tag-footer-icons i.fa-heart
   color: $pink
+.tag .tag-footer-icons i
+  display: none
+.tag.featured .tag-footer-icons i.fa-heart
+  display: inline

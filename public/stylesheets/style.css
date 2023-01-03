@@ -7724,12 +7724,32 @@ h4.category, .category.h4 {
   height: auto;
 }
 
-.modal-header button i {
+.modal button i {
   color: #ffb454;
 }
-
-#image-modal-unfeatured i, #image-modal-unhide i {
+.modal button.image-modal-unfeatured i, .modal button.image-modal-unhide i {
   color: #f893fc;
+}
+
+.modal-title {
+  color: #9ef68d;
+  font-weight: 500;
+}
+
+.modal-footer {
+  justify-content: space-between;
+}
+
+.tag .tag-footer-icons i.fa-heart {
+  color: #f893fc;
+}
+
+.tag .tag-footer-icons i {
+  display: none;
+}
+
+.tag.featured .tag-footer-icons i.fa-heart {
+  display: inline;
 }
 
 /*# sourceMappingURL=style.css.map */

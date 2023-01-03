@@ -1,7 +1,7 @@
 require "sinatra/activerecord/rake"
 namespace :db do
   task :load_config do
-    require "./app"
+    require "./prompt_master"
   end
 
   desc "Sync database with images in inspiration folder"

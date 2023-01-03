@@ -22,6 +22,10 @@ class Tag < ActiveRecord::Base
     "./inspiration/#{category.name}/#{name}"
   end
 
+  def hidden
+    !active
+  end
+
   def tag_name
     name.parameterize
   end

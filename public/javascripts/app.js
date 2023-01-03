@@ -32,74 +32,109 @@ const showModal = (imageUrl, tagJson) => {
   // Set title
   const modalTitle = document.getElementById("image-modal-title");
   modalTitle.innerHTML = tag.name;
-  // Init featured button
-  const featuredButton = document.getElementById("image-modal-featured");
-  const unfeaturedButton = document.getElementById("image-modal-unfeatured");
-  featuredButton.style.display = tag.featured ? "none" : "inline-block";
-  unfeaturedButton.style.display = tag.featured ? "inline-block" : "none";
-  featuredButton.onclick = () => {
-    $.ajax({
-      url: `/tag/${tag.id}/feature`,
-      type: "PUT",
-      success: function (result) {
-        featuredButton.style.display = "none";
-        unfeaturedButton.style.display = "inline-block";
-      },
-    });
-  };
-  unfeaturedButton.onclick = () => {
-    $.ajax({
-      url: `/tag/${tag.id}/unfeature`,
-      type: "PUT",
-      success: function (result) {
-        featuredButton.style.display = "inline-block";
-        unfeaturedButton.style.display = "none";
-      },
-    });
-  };
+  // Init featured buttons
+  const featuredButtons = document.querySelectorAll(".image-modal-featured");
+  const unfeaturedButtons = document.querySelectorAll(
+    ".image-modal-unfeatured"
+  );
+  featuredButtons.forEach((button) => {
+    button.style.display = tag.featured ? "none" : "inline-block";
+    button.onclick = () => {
+      $.ajax({
+        url: `/tag/${tag.id}/feature`,
+        type: "PUT",
+        success: function (result) {
+          featuredButtons.forEach((button) => {
+            button.style.display = "none";
+          });
+          unfeaturedButtons.forEach((button) => {
+            button.style.display = "inline-block";
+          });
+          // show featured icon
+          const tagBlock = document.getElementById(`tag-${tag.id}`);
+          tagBlock.classList.add("featured");
+        },
+      });
+    };
+  });
+
+  unfeaturedButtons.forEach((button) => {
+    button.style.display = tag.featured ? "inline-block" : "none";
+    button.onclick = () => {
+      $.ajax({
+        url: `/tag/${tag.id}/unfeature`,
+        type: "PUT",
+        success: function (result) {
+          featuredButtons.forEach((button) => {
+            button.style.display = "inline-block";
+          });
+          unfeaturedButtons.forEach((button) => {
+            button.style.display = "none";
+          });
+          // hide featured icon
+          const tagBlock = document.getElementById(`tag-${tag.id}`);
+          tagBlock.classList.remove("featured");
+        },
+      });
+    };
+  });
 
   // Init hide and unhide buttons
-  const hideButton = document.getElementById("image-modal-hide");
-  const unhideButton = document.getElementById("image-modal-unhide");
-  hideButton.style.display = tag.active ? "inline-block" : "none";
-  unhideButton.style.display = tag.active ? "none" : "inline-block";
-  hideButton.onclick = () => {
-    $.ajax({
-      url: `/tag/${tag.id}/hide`,
-      type: "PUT",
-      success: function (result) {
-        hideButton.style.display = "none";
-        unhideButton.style.display = "inline-block";
-        // remove tag block from page with parent
-        const tagBlock = document.getElementById(`tag-${tag.id}`);
-        tagBlock.parentElement.remove();
-        // close modal
-        imageModal.hide();
-      },
-    });
-  };
-  unhideButton.onclick = () => {
-    $.ajax({
-      url: `/tag/${tag.id}/unhide`,
-      type: "PUT",
-      success: function (result) {
-        hideButton.style.display = "inline-block";
-        unhideButton.style.display = "none";
-        // remove tag block from page
-        const tagBlock = document.getElementById(`tag-${tag.id}`);
-        tagBlock.parentElement.remove();
-        // close modal
-        imageModal.hide();
-      },
-    });
-  };
+  const hideButtons = document.querySelectorAll(".image-modal-hide");
+  const unhideButtons = document.querySelectorAll(".image-modal-unhide");
+  hideButtons.forEach((button) => {
+    button.style.display = tag.active ? "inline-block" : "none";
+    button.onclick = () => {
+      $.ajax({
+        url: `/tag/${tag.id}/hide`,
+        type: "PUT",
+        success: function (result) {
+          hideButtons.forEach((button) => {
+            button.style.display = "none";
+          });
+          unhideButtons.forEach((button) => {
+            button.style.display = "inline-block";
+          });
+          // remove tag block from page with parent
+          const tagBlock = document.getElementById(`tag-${tag.id}`);
+          tagBlock.parentElement.remove();
+          // close modal
+          imageModal.hide();
+        },
+      });
+    };
+  });
+  unhideButtons.forEach((button) => {
+    button.style.display = tag.active ? "none" : "inline-block";
+    button.onclick = () => {
+      $.ajax({
+        url: `/tag/${tag.id}/unhide`,
+        type: "PUT",
+        success: function (result) {
+          hideButtons.forEach((button) => {
+            button.style.display = "inline-block";
+          });
+          unhideButtons.forEach((button) => {
+            button.style.display = "none";
+          });
+          // remove tag block from page
+          const tagBlock = document.getElementById(`tag-${tag.id}`);
+          tagBlock.parentElement.remove();
+          // close modal
+          imageModal.hide();
+        },
+      });
+    };
+  });
 
   // Init button to collect tag
-  const collectButton = document.getElementById("image-modal-collect-tag");
-  collectButton.onclick = () => {
-    collectTag(tagJson);
-    imageModal.hide();
-  };
+  const collectButtons = document.querySelectorAll(".image-modal-collect-tag");
+  collectButtons.forEach((button) => {
+    button.onclick = () => {
+      collectTag(tagJson);
+      imageModal.hide();
+    };
+  });
 
   // Show modal
   imageModal.show();

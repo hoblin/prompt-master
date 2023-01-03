@@ -26,6 +26,12 @@ class PromptMaster < Sinatra::Base
     BetterErrors.application_root = __dir__
   end
 
+  helpers do
+    def partial (template, locals = {})
+      haml(template, layout: false, locals: locals)
+    end
+  end
+
   # will_paginate config
   require "will_paginate"
   require "will_paginate/active_record"
