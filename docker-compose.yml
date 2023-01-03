@@ -7,5 +7,5 @@ services:
     entrypoint: [bin/entry]
     command: bundle exec rackup -o 0.0.0.0 -p 8080
     volumes:
-      - /app
+      - .:/app
       - ./../inspiration:/app/inspiration

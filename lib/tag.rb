@@ -12,6 +12,8 @@ class Tag < ActiveRecord::Base
   scope :featured, -> { where(featured: true) }
 
   def images
+    # return empty array if path doesn't exist
+    return [] unless Dir.exist?(path)
     @images ||= Dir.entries(path)
       .select { |f| File.file? File.join(path, f) }
       .sort
