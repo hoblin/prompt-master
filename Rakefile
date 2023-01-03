@@ -17,7 +17,6 @@ namespace :db do
       # create or initialize tags from folders in category folder
       category.tags_from_directory.each do |tag|
         tag.save!
-        logger.info "\t\tTag synced: #{tag.name}"
       end
     end
   end

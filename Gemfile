@@ -13,9 +13,9 @@ gem "activesupport", "~> 7.0"
 gem "sinatra-activerecord", "~> 2.0"
 gem "sqlite3", "~> 1.5"
 gem "rake", "~> 13.0"
+gem "rack-unreloader", "~> 2.0"
 
 group :development do
-  gem "rack-unreloader", "~> 2.0"
   gem "standard", "~> 1.20"
   gem "foreman", "~> 0.87.2"
 end

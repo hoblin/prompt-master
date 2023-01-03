@@ -42,8 +42,6 @@ GEM
     puma (6.0.1)
       nio4r (~> 2.0)
     rack (2.2.5)
-    rack-livereload (0.3.17)
-      rack
     rack-protection (3.0.5)
       rack
     rack-unreloader (2.0.0)
@@ -102,7 +100,6 @@ DEPENDENCIES
   foreman (~> 0.87.2)
   haml (~> 6.1)
   puma (~> 6.0)
-  rack-livereload (~> 0.3.17)
   rack-unreloader (~> 2.0)
   rake (~> 13.0)
   redcarpet (~> 3.5)
