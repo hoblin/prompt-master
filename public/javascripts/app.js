@@ -27,21 +27,21 @@ const translate = (string, targetDomEle) => {
   const settings = {
     async: true,
     crossDomain: true,
-    url: "https://google-translate1.p.rapidapi.com/language/translate/v2",
+    url: "https://translo.p.rapidapi.com/api/v3/translate",
     method: "POST",
     headers: {
       "content-type": "application/x-www-form-urlencoded",
       "X-RapidAPI-Key": rapidAPI_key,
-      "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
+      "X-RapidAPI-Host": "translo.p.rapidapi.com",
     },
     data: {
-      q: string,
-      target: "ru",
-      source: "en",
+      text: string,
+      to: "ru",
+      from: "en",
     },
   };
   $.ajax(settings).done(function (response) {
-    targetDomEle.innerHTML = response.data.translations[0].translatedText;
+    targetDomEle.innerHTML = response.translated_text;
   });
 };
 
@@ -167,7 +167,6 @@ const showModal = (imageUrl, tagJson) => {
   const translateButtons = document.querySelectorAll(".image-modal-translate");
   translateButtons.forEach((button) => {
     button.onclick = () => {
-      console.log("translate");
       const targetDomEle = document.getElementById("image-modal-title");
       translate(tag.name, targetDomEle);
     };
@@ -195,6 +194,7 @@ const buildSwiperSlider = (sliderElm) => {
   const sliderIdentifier = sliderElm.dataset.id;
   return new Swiper(`#${sliderElm.id}`, {
     loop: true,
+    // cssMode: true, // Enable CSS mode to improve performance
   });
 };
 // Init swipers on page load or when new content is added
