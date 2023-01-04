@@ -27,8 +27,15 @@ class PromptMaster < Sinatra::Base
   end
 
   helpers do
-    def partial (template, locals = {})
+    # render partials
+    def partial(template, locals = {})
       haml(template, layout: false, locals: locals)
+    end
+
+    # access app secrets from ./secrets.yml
+    def secret(key)
+      @secrets ||= YAML.load_file(File.join(__dir__, "secrets.yml"))
+      @secrets[key] || ENV[key] || ""
     end
   end
 

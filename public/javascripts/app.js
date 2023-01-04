@@ -22,6 +22,29 @@ const cleanCollection = () => {
   tagCollectionFloat.style.display = "none";
 };
 
+//Translate text from english to russian using RapidAPI
+const translate = (string, targetDomEle) => {
+  const settings = {
+    async: true,
+    crossDomain: true,
+    url: "https://google-translate1.p.rapidapi.com/language/translate/v2",
+    method: "POST",
+    headers: {
+      "content-type": "application/x-www-form-urlencoded",
+      "X-RapidAPI-Key": rapidAPI_key,
+      "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
+    },
+    data: {
+      q: string,
+      target: "ru",
+      source: "en",
+    },
+  };
+  $.ajax(settings).done(function (response) {
+    targetDomEle.innerHTML = response.data.translations[0].translatedText;
+  });
+};
+
 // Bootstrap 5 modal
 let imageModal;
 const showModal = (imageUrl, tagJson) => {
@@ -133,6 +156,16 @@ const showModal = (imageUrl, tagJson) => {
     button.onclick = () => {
       collectTag(tagJson);
       imageModal.hide();
+    };
+  });
+
+  // Init translate tag name button
+  const translateButtons = document.querySelectorAll(".image-modal-translate");
+  translateButtons.forEach((button) => {
+    button.onclick = () => {
+      console.log("translate");
+      const targetDomEle = document.getElementById("image-modal-title");
+      translate(tag.name, targetDomEle);
     };
   });
 

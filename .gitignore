@@ -2,3 +2,4 @@
 tmp/*
 inspiration/*
 *.sqlite3
+secrets.yml
