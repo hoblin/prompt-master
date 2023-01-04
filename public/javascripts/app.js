@@ -76,6 +76,8 @@ const showModal = (imageUrl, tagJson) => {
           // show featured icon
           const tagBlock = document.getElementById(`tag-${tag.id}`);
           tagBlock.classList.add("featured");
+          // close modal
+          imageModal.hide();
         },
       });
     };
@@ -97,6 +99,8 @@ const showModal = (imageUrl, tagJson) => {
           // hide featured icon
           const tagBlock = document.getElementById(`tag-${tag.id}`);
           tagBlock.classList.remove("featured");
+          // close modal
+          imageModal.hide();
         },
       });
     };
