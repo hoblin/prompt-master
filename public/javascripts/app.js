@@ -178,16 +178,14 @@ const showModal = (imageUrl, tagJson) => {
 };
 
 // Top button
-function scrollFunction(button) {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    button.style.display = "inline-block";
-  } else {
-    button.style.display = "none";
-  }
-}
 function topFunction() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
+}
+// Bottom button
+function bottomFunction() {
+  document.body.scrollTop = document.body.scrollHeight;
+  document.documentElement.scrollTop = document.documentElement.scrollHeight;
 }
 
 // Swiper slider
@@ -240,12 +238,6 @@ $(document).ready(function () {
       {}
     );
   }
-
-  // Top button
-  let topButton = document.getElementById("topBtn");
-  window.onscroll = function () {
-    scrollFunction(topButton);
-  };
 
   // Infinite scroll init
   let elem = document.querySelector("#infinite-scroll");
