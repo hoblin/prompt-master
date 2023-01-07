@@ -16,6 +16,7 @@ class Tag < ActiveRecord::Base
     return [] unless Dir.exist?(path)
     @images ||= Dir.entries(path)
       .select { |f| File.file? File.join(path, f) }
+      .reject { |f| !f.end_with?(".jpg") }
       .sort
       .map { |image| Image.new(image, self) }
   end
