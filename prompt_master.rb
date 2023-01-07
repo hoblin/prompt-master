@@ -44,9 +44,6 @@ class PromptMaster < Sinatra::Base
   require "will_paginate/active_record"
   WillPaginate.per_page = 160
 
-  # DB config
-  set :database, {adapter: "sqlite3", database: "db/prompt-master.sqlite3"}
-
   # set port
   set :port, 8080
 

@@ -1,13 +1,14 @@
+require 'sinatra/activerecord'
 require "sinatra/activerecord/rake"
 namespace :app do
   task :load_config do
     require "./prompt_master"
-    # require classes recursively
-    Dir[File.dirname(__FILE__) + "/lib/*.rb"].each { |file| require file }
   end
 
   desc "Sync database with images in inspiration folder"
   task sync: :load_config do
+    # require classes recursively
+    Dir[File.dirname(__FILE__) + "/lib/*.rb"].each { |file| require file }
     # create or initialize categories from folders in inspiration folder
     Category.from_directory.each do |category|
       category.save!
@@ -22,6 +23,8 @@ namespace :app do
 
   desc "Merge images from ./inspiration/system/category to ./inspiration/category"
   task merge: :load_config do
+    # require classes recursively
+    Dir[File.dirname(__FILE__) + "/lib/*.rb"].each { |file| require file }
     Utilities.merge_images
   end
 
