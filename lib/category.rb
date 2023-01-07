@@ -25,6 +25,7 @@ class Category < ActiveRecord::Base
     Dir.entries("./inspiration")
       .select { |f| File.directory? File.join(BASE_PATH, f) }
       .reject { |f| f == "." || f == ".." }
+      .reject { |f| f == "system" }
       .sort
       .map { |category| Category.find_or_initialize_by(name: category) }
   end
