@@ -19,3 +19,5 @@ group :development do
   gem "standard", "~> 1.20"
   gem "foreman", "~> 0.87.2"
 end
+
+gem "pry", "~> 0.14.1"

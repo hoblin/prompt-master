@@ -1,13 +1,17 @@
 #!/bin/bash
 set -e
+# set env
+export RACK_ENV=production
+# install gems
+bundle install --without development test
 # update repo
-git pull --ff-only
+git pull origin main --ff-only
 # migrate database
 rake db:create
 rake db:migrate
-# sync app
-rake app:sync
 # merge files
 rake app:merge
+# sync app
+rake app:sync
 
 exec "$@"
