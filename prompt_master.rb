@@ -2,7 +2,6 @@
 # Require all gems in Gemfile
 require "bundler"
 Bundler.require
-
 # require classes recursively
 Dir[File.dirname(__FILE__) + "/lib/*.rb"].each { |file| require file }
 
@@ -10,6 +9,8 @@ Dir[File.dirname(__FILE__) + "/lib/*.rb"].each { |file| require file }
 class PromptMaster < Sinatra::Base
   register Sinatra::ActiveRecordExtension
   include WillPaginate::Sinatra::Helpers
+
+  PAGINATION_LIMIT = 80
 
   # set root
   set :root, File.dirname(__FILE__)
@@ -42,7 +43,7 @@ class PromptMaster < Sinatra::Base
   # will_paginate config
   require "will_paginate"
   require "will_paginate/active_record"
-  WillPaginate.per_page = 160
+  WillPaginate.per_page = PAGINATION_LIMIT
 
   # set port
   set :port, 8080
