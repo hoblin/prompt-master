@@ -1,8 +1,13 @@
 #!/bin/bash
 set -e
-
+# update repo
+git pull
+# migrate database
 rake db:create
 rake db:migrate
-rake db:sync
+# sync app
+rake app:sync
+# merge files
+rake app:merge
 
 exec "$@"
