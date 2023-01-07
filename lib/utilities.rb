@@ -35,7 +35,7 @@ class Utilities
         .map { |file| file.split("/").last }.uniq
         .select { |filename| filename =~ /^\d{3}\.jpg$/ }
         .map { |filename| filename.split(".").first }
-        .map(&:to_i).sort.last
+        .map(&:to_i).max
       # find all the images with the same name in source folder
       source_files = Dir["./inspiration/#{SYSTEM_FOLDER}/#{category}/**/*"]
         .map { |file| file.split("/").last }.uniq

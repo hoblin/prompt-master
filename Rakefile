@@ -1,4 +1,4 @@
-require 'sinatra/activerecord'
+require "sinatra/activerecord"
 require "sinatra/activerecord/rake"
 namespace :app do
   task :load_config do
