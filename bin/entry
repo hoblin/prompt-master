@@ -2,6 +2,8 @@
 set -e
 # set env
 export RACK_ENV=production
+# install gems
+bundle install --without development test
 # update repo
 git pull origin main --ff-only
 # install gems
