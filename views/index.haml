@@ -5,7 +5,7 @@
 .row
   .col-12
     %ul.nav
-      - Category.all.map do |category|
+      - Category.order('name').all.map do |category|
         %li.nav-item
           %a.nav-link{href: "/category/#{category.id}/", class: (params[:id].to_i == category.id ? 'active' : '')}= category.name
 - if @category
