@@ -7751,4 +7751,41 @@ h4.category, .category.h4 {
   display: inline;
 }
 
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+}
+
+.rating > input {
+  display: none;
+}
+
+.rating > label {
+  position: relative;
+  width: 1.3rem;
+  font-size: 30px;
+  font-weight: 300;
+  color: #ffb454;
+  cursor: pointer;
+}
+.rating > label::before {
+  content: "★";
+  position: absolute;
+  opacity: 0;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before {
+  opacity: 1 !important;
+}
+
+.rating > input:checked ~ label:before {
+  opacity: 1;
+}
+
+.rating:hover > input:checked ~ label:before {
+  opacity: 0.4;
+}
+
 /*# sourceMappingURL=style.css.map */

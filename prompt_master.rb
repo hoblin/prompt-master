@@ -38,6 +38,14 @@ class PromptMaster < Sinatra::Base
       @secrets ||= YAML.load_file(File.join(__dir__, "secrets.yml"))
       @secrets[key] || ENV[key] || ""
     end
+
+    # generate URL for category with optional filter and sorting
+    def category_url(category_id, filter: nil, sort: nil)
+      url = "/category/#{category_id}"
+      url += "/#{filter}" if filter
+      url += "?sort=#{sort}" if sort
+      url
+    end
   end
 
   # will_paginate config
@@ -52,8 +60,9 @@ class PromptMaster < Sinatra::Base
     erb :"500"
   end
 
-  get "/:mode?" do
-    @categories = case params[:mode]
+  # root route with optional filter featured|hidden
+  get "/:filter?" do
+    @categories = case params[:filter]
     when "featured"
       Category.featured
     when "hidden"
@@ -66,20 +75,34 @@ class PromptMaster < Sinatra::Base
   end
 
   # render index.erb with selected category
-  get "/category/:id/:mode?" do
+  get "/category/:id/:filter?" do
     @category = Category.find_by_id(params[:id])
     # redirect to root if category not found
     redirect "/" if @category.nil?
 
+    # sorting statement
+    @sort = case params[:sort]
+    when "rank-asc"
+      "rank ASC"
+    when "rank-desc"
+      "rank DESC"
+    when "name-asc"
+      "name ASC"
+    when "name-desc"
+      "name DESC"
+    else
+      "name ASC"
+    end
+
     # paginate tags array with kaminari of the selected category
-    @tags = case params[:mode]
+    @tags = case params[:filter]
     when "featured"
       @category.tags.featured
     when "hidden"
       @category.tags.hidden
     else
       @category.tags.active
-    end.order("name").page(params[:page])
+    end.order(@sort).page(params[:page])
     haml :index, escape_html: false
   end
 
@@ -132,6 +155,19 @@ class PromptMaster < Sinatra::Base
 
     # unhide tag
     @tag.update(active: true)
+    {success: true}.to_json
+  end
+
+  # rate tag
+  put "/tag/:id/rate" do
+    content_type :json
+
+    @tag = Tag.find_by_id(params[:id])
+    # respond with error if tag not found
+    return {success: false, error: "Tag not found"}.to_json if @tag.nil?
+
+    # rate tag
+    @tag.update(rank: params[:rank])
     {success: true}.to_json
   end
 

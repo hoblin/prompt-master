@@ -3,7 +3,7 @@ require "active_support/core_ext/string/inflections"
 # Tag is a directory in the category folder
 # Image is a file in the tag folder
 class Tag < ActiveRecord::Base
-  belongs_to :category
+  belongs_to :category, dependent: :destroy
 
   validates :name, presence: true
 

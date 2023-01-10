@@ -5,7 +5,13 @@
         .swiper-slide
           %img{alt: "#{tag.name}", src: "#{image.url}", onclick: "showModal('#{image.url}', '#{tag.to_json}')"}
     .swiper-scrollbar
-  .tag-footer.d-flex.justify-content-between
+  .tag-footer
+    .actions.d-flex.justify-content-between
+      .rating
+        - 5.times.each do |i|
+          - rating_id = "tag#{tag.id}-star#{i+1}"
+          %input{type: "radio", id: rating_id, name: "tag#{tag.id}-rating", value: "#{i+1}", checked: (tag.rank == i+1)}
+          %label{for: rating_id, onclick: "rateTag(#{tag.id}, #{i+1})"} ☆
+      .tag-footer-icons
+        %i.fa-solid.fa-heart
     .tag-name= tag.name
-    .tag-footer-icons
-      %i.fa-solid.fa-heart

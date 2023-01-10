@@ -7,7 +7,7 @@
     %ul.nav
       - Category.order('name').all.map do |category|
         %li.nav-item
-          %a.nav-link{href: "/category/#{category.id}/", class: (params[:id].to_i == category.id ? 'active' : '')}= category.name
+          %a.nav-link{href: category_url(category.id), class: (params[:id].to_i == category.id ? 'active' : '')}= category.name
 - if @category
   .row
     .col
@@ -16,12 +16,27 @@
     .col
       %ul.fa-ul.nav.filters.float-end
         %li.nav-item
-          %a.nav-link{href: "/category/#{@category.id}/featured", class: (params[:mode] == "featured" ? 'active' : '')}
-            %i.fa-heart{class: (params[:mode] == "featured" ? 'fa-solid' : 'fa-regular')}
+          - if params[:sort] == "name-desc"
+            %a.nav-link{href: category_url(@category.id, filter: params[:filter], sort: "name-asc")}
+              %i.fa-arrow-down-z-a.fa-solid
+          - else
+            %a.nav-link{href: category_url(@category.id, filter: params[:filter], sort: "name-desc")}
+              %i.fa-arrow-up-a-z.fa-solid
+        %li.nav-item
+          - if params[:sort] == "rank-desc"
+            %a.nav-link{href: category_url(@category.id, filter: params[:filter], sort: "rank-asc")}
+              %i.fa-arrow-down-9-1.fa-solid
+          - else
+            %a.nav-link{href: category_url(@category.id, filter: params[:filter], sort: "rank-desc")}
+              %i.fa-arrow-up-1-9.fa-solid
+
+        %li.nav-item
+          %a.nav-link{href: category_url(@category.id, filter: 'featured', sort: params[:sort]), class: (params[:filter] == "featured" ? 'active' : '')}
+            %i.fa-heart{class: (params[:filter] == "featured" ? 'fa-solid' : 'fa-regular')}
             %span.d-none.d-sm-inline Featured
         %li
-          %a.nav-link{href: "/category/#{@category.id}/hidden", class: (params[:mode] == "hidden" ? 'active' : '')}
-            %i.fa-eye-slash{class: (params[:mode] == "hidden" ? 'fa-solid' : 'fa-regular')}
+          %a.nav-link{href: category_url(@category.id, filter: 'hidden', sort: params[:sort]), class: (params[:filter] == "hidden" ? 'active' : '')}
+            %i.fa-eye-slash{class: (params[:filter] == "hidden" ? 'fa-solid' : 'fa-regular')}
             %span.d-none.d-sm-inline Hidden
   - if @tags
     = will_paginate @tags
