@@ -229,6 +229,20 @@ function swipeRight() {
   });
 }
 
+// rate tag
+function rateTag(tagId, rating) {
+  $.ajax({
+    url: `/tag/${tagId}/rate`,
+    type: "PUT",
+    data: { rank: rating },
+    success: function (result) {
+      // update rating radio button
+      const ratingElm = document.getElementById(`tag${tagId}-star${rating}`);
+      ratingElm.checked = true;
+    },
+  });
+}
+
 // on load
 $(document).ready(function () {
   // Init Bootstrap modal
