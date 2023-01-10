@@ -41,8 +41,8 @@ class PromptMaster < Sinatra::Base
 
     # generate URL for category with optional filter and sorting
     def category_url(category_id, filter: nil, sort: nil)
-      url = "/category/#{category_id}"
-      url += "/#{filter}" if filter
+      url = "/category/#{category_id}/"
+      url += "#{filter}" if filter
       url += "?sort=#{sort}" if sort
       url
     end
