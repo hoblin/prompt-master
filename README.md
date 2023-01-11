@@ -17,6 +17,16 @@ Please note that the below instructions were written to work on Windows OS and y
 
 ### Steps
 
+```bash
+git config --global core.autocrlf input
+cd C:/stable-diffusion-webui/extensions/stable-diffusion-webui-inspiration/
+git clone https://github.com/hoblin/prompt-master.git
+cd prompt-master
+docker compose up -d
+```
+
+### Steps explanation
+
 1. [Install Git SCM](https://gitforwindows.org/) for Windows.
 2. [Install Docker Desktop](https://www.docker.com/products/docker-desktop/).
 3. Follow [the instructions](https://github.com/yfszzx/stable-diffusion-webui-inspiration#using-txt2img-inspiration) in the yfszzx/stable-diffusion-webui-inspiration repository to generate previews for the words in the prompts.
