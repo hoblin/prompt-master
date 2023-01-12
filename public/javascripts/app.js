@@ -24,6 +24,8 @@ const cleanCollection = () => {
 
 //Translate text from english to russian using RapidAPI
 const translate = (string, targetDomEle) => {
+  // add .loading class to target element
+  targetDomEle.classList.add("loading");
   const settings = {
     async: true,
     crossDomain: true,
@@ -42,6 +44,8 @@ const translate = (string, targetDomEle) => {
   };
   $.ajax(settings).done(function (response) {
     targetDomEle.innerHTML = response.translated_text.ru;
+    // remove .loading class from target
+    targetDomEle.classList.remove("loading");
   });
 };
 
