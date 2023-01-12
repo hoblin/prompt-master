@@ -5,7 +5,7 @@ export RACK_ENV=production
 # update repo
 git pull origin main --ff-only
 # copy secrets file if not exists
-cp -n config/secrets.yml.example config/secrets.yml
+cp -n /app/secrets.yml.example /app/secrets.yml
 # install gems
 bundle install --without development test
 # migrate database
