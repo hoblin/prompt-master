@@ -238,7 +238,7 @@ function rateTag(tagId, rating) {
   $.ajax({
     url: `/tag/${tagId}/rate`,
     type: "PUT",
-    data: { rank: rating },
+    data: { rank: 6 - rating },
     success: function (result) {
       // update rating radio button
       const ratingElm = document.getElementById(`tag${tagId}-star${rating}`);
