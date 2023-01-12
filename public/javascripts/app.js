@@ -27,12 +27,12 @@ const translate = (string, targetDomEle) => {
   const settings = {
     async: true,
     crossDomain: true,
-    url: "https://translo.p.rapidapi.com/api/v3/translate",
-    method: "POST",
+    url: "https://nlp-translation.p.rapidapi.com/v1/translate",
+    method: "GET",
     headers: {
       "content-type": "application/x-www-form-urlencoded",
       "X-RapidAPI-Key": rapidAPI_key,
-      "X-RapidAPI-Host": "translo.p.rapidapi.com",
+      "X-RapidAPI-Host": "nlp-translation.p.rapidapi.com",
     },
     data: {
       text: string,
@@ -41,7 +41,7 @@ const translate = (string, targetDomEle) => {
     },
   };
   $.ajax(settings).done(function (response) {
-    targetDomEle.innerHTML = response.translated_text;
+    targetDomEle.innerHTML = response.translated_text.ru;
   });
 };
 
