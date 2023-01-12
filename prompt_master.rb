@@ -102,10 +102,10 @@ class PromptMaster < Sinatra::Base
       @category.tags.hidden
     else
       @category.tags.active
-    end.order(@sort).page(params[:page])
+    end.reorder(@sort).page(params[:page])
+
     haml :index, escape_html: false
   end
-
   # add tag to featured tags
   put "/tag/:id/feature" do
     content_type :json

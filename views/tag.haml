@@ -10,7 +10,7 @@
       .rating
         - 5.times.each do |i|
           - rating_id = "tag#{tag.id}-star#{i+1}"
-          %input{type: "radio", id: rating_id, name: "tag#{tag.id}-rating", value: "#{i+1}", checked: (tag.rank == i+1)}
+          %input{type: "radio", id: rating_id, name: "tag#{tag.id}-rating", value: "#{i+1}", checked: (tag.rank == 5 - i)}
           %label{for: rating_id, onclick: "rateTag(#{tag.id}, #{i+1})"} ☆
       .tag-footer-icons
         %i.fa-solid.fa-heart
