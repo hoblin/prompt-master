@@ -42,7 +42,7 @@ class PromptMaster < Sinatra::Base
     # generate URL for category with optional filter and sorting
     def category_url(category_id, filter: nil, sort: nil)
       url = "/category/#{category_id}/"
-      url += "#{filter}" if filter
+      url += filter.to_s if filter
       url += "?sort=#{sort}" if sort
       url
     end
@@ -87,11 +87,11 @@ class PromptMaster < Sinatra::Base
     when "rank-desc"
       "rank DESC"
     when "name-asc"
-      "name ASC"
+       Arel.sql "LOWER(name) ASC"
     when "name-desc"
-      "name DESC"
+       Arel.sql "LOWER(name) DESC"
     else
-      "name ASC"
+       Arel.sql "LOWER(name) ASC"
     end
 
     # paginate tags array with kaminari of the selected category
