@@ -40,7 +40,7 @@
             %span.d-none.d-sm-inline Hidden
   - if @tags
     = will_paginate @tags
-    .row.row-cols-2.row-cols-sm-2.row-cols-md-4#infinite-scroll
+    .row.row-cols-1.row-cols-sm-1.row-cols-md-2.row-cols-lg-4#infinite-scroll
       - @tags.each do |tag|
         .col.tag-container
           = haml :tag, locals: {tag: tag}
