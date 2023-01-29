@@ -7683,6 +7683,9 @@ a.nav-link {
 h4.category, .category.h4 {
   text-transform: uppercase;
 }
+h4.category button, .category.h4 button {
+  margin-left: 50px;
+}
 
 .pagination {
   display: none;

@@ -106,6 +106,20 @@ class PromptMaster < Sinatra::Base
 
     haml :index, escape_html: false
   end
+
+  # delete category
+  delete "/category/:id" do
+    content_type :json
+
+    @category = Category.find_by_id(params[:id])
+    # respond with error if category not found
+    return {success: false, error: "Category not found"}.to_json if @category.nil?
+
+    # delete category
+    @category.destroy
+    {success: true}.to_json
+  end
+
   # add tag to featured tags
   put "/tag/:id/feature" do
     content_type :json

@@ -72,7 +72,6 @@ $modal-backdrop-bg: $primary
 .btn-tag-delete
   @include button-variant($primary, $danger, $danger)
 
-
 @import "../../bootstrap/scss/helpers"
 @import "../../bootstrap/scss/utilities"
 @import "../../bootstrap/scss/utilities/api"
@@ -86,6 +85,9 @@ a.nav-link
 
 h4.category
   text-transform: uppercase
+  // Delete button margin left
+  & button
+    margin-left: 50px
 
 .pagination
   display: none
