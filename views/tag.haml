@@ -15,9 +15,9 @@
     .card-footer
       .d-flex.justify-content-between
         .btn-group.p-2
-          %button.btn.btn-link{class: "#{tag.featured ? 'favorited' : ''}", disabled: true}
+          %button.btn.btn-link.btn-tag-featured{disabled: true}
             %i.fa.fa-heart
-          %button.btn.btn-link{class: "#{tag.active ? '' : 'hidden'}", disabled: true}
+          %button.btn.btn-link.btn-tag-hidden{disabled: true}
             %i.fa.fa-eye-slash
         .btn-group.p-2
           %button.btn.btn-tag-delete{type: "button", onclick: "confirmDeleteModalShow('tag', #{tag.id}, '#{tag.name}')"}

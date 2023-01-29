@@ -7802,7 +7802,7 @@ h4.category button, .category.h4 button {
   justify-content: space-between;
 }
 
-.tag .card-footer .btn.favorited, .tag .card-footer .btn.hidden {
+.tag.featured .card-footer .btn-tag-featured, .tag.hidden .card-footer .btn.btn-tag-hidden {
   color: #f893fc;
   opacity: 1;
 }
