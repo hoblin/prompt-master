@@ -46,6 +46,22 @@ class PromptMaster < Sinatra::Base
       url += "?sort=#{sort}" if sort
       url
     end
+
+    # include javascript file with cache busting
+    def javascript_include_tag(file)
+      base_path = File.join(__dir__, "public", "javascripts")
+      file = file + ".js" unless file.end_with?(".js")
+      hash = Digest::MD5.hexdigest(File.read(File.join(base_path, file)))
+      "<script src=\"/javascripts/#{file}?#{hash}\"></script>"
+    end
+
+    # include stylesheet file with cache busting
+    def stylesheet_link_tag(file)
+      base_path = File.join(__dir__, "public", "stylesheets")
+      file = file + ".css" unless file.end_with?(".css")
+      hash = Digest::MD5.hexdigest(File.read(File.join(base_path, file)))
+      "<link rel=\"stylesheet\" href=\"/stylesheets/#{file}?#{hash}\">"
+    end
   end
 
   # will_paginate config
