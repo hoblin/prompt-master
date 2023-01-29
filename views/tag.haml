@@ -7,11 +7,11 @@
     .swiper-scrollbar
   .card-body
     %h5.card-title= tag.name
-    .rating
+    .rating.btn-group.btn-group-sm{ role: 'group' }
       - 5.times.each do |i|
         - rating_id = "tag#{tag.id}-star#{i+1}"
-        %input{type: "radio", id: rating_id, name: "tag#{tag.id}-rating", value: "#{i+1}", checked: (tag.rank == 5 - i)}
-        %label{for: rating_id, onclick: "rateTag(#{tag.id}, #{i+1})"} ☆
+        %input.btn-check{type: "radio", id: rating_id, name: "tag#{tag.id}-rating", value: "#{i+1}", checked: (tag.rank == 5 - i)}
+        %label.btn.btn-tag-rating{for: rating_id, onclick: "rateTag(#{tag.id}, #{i+1})"} ☆
     .card-footer
       .d-flex.justify-content-between
         .btn-group.p-2
