@@ -10,10 +10,12 @@ class Category < ActiveRecord::Base
   scope :hidden, -> { where(active: false) }
   scope :featured, -> { where(featured: true) }
 
+  # delete category folder when category is deleted
+  before_destroy :delete_category
+
   BASE_PATH = "./inspiration"
 
   def tags_from_directory
-    path = "#{BASE_PATH}/#{name}"
     Dir.entries(path)
       .select { |f| File.directory? File.join(path, f) }
       .reject { |f| f == "." || f == ".." }
@@ -32,5 +34,13 @@ class Category < ActiveRecord::Base
 
   def self.find(name)
     all.find { |category| category.name == name.to_s }
+  end
+
+  def path
+    "#{BASE_PATH}/#{name}"
+  end
+
+  def delete_category
+    FileUtils.rm_rf(path)
   end
 end

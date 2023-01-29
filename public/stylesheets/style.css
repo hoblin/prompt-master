@@ -3698,6 +3698,36 @@ textarea.form-control-lg {
   filter: invert(1) grayscale(100%) brightness(200%);
 }
 
+.btn-tag-delete {
+  color: #ff618c;
+  background-color: #15232d;
+  border-color: #ff618c;
+}
+.btn-tag-delete:hover {
+  color: #ffb454;
+  background-color: #38444d;
+  border-color: #ff7198;
+}
+.btn-check:focus + .btn-tag-delete, .btn-tag-delete:focus {
+  color: #ffb454;
+  background-color: #38444d;
+  border-color: #ff7198;
+  box-shadow: 0 0 0 0.25rem rgba(255, 97, 140, 0.5);
+}
+.btn-check:checked + .btn-tag-delete, .btn-check:active + .btn-tag-delete, .btn-tag-delete:active, .btn-tag-delete.active, .show > .btn-tag-delete.dropdown-toggle {
+  color: #ffb454;
+  background-color: #444f57;
+  border-color: #ff7198;
+}
+.btn-check:checked + .btn-tag-delete:focus, .btn-check:active + .btn-tag-delete:focus, .btn-tag-delete:active:focus, .btn-tag-delete.active:focus, .show > .btn-tag-delete.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.25rem rgba(255, 97, 140, 0.5);
+}
+.btn-tag-delete:disabled, .btn-tag-delete.disabled {
+  color: #ffb454;
+  background-color: #15232d;
+  border-color: #ff618c;
+}
+
 .clearfix::after {
   display: block;
   clear: both;
@@ -7653,6 +7683,9 @@ a.nav-link {
 h4.category, .category.h4 {
   text-transform: uppercase;
 }
+h4.category button, .category.h4 button {
+  margin-left: 50px;
+}
 
 .pagination {
   display: none;
@@ -7739,16 +7772,9 @@ h4.category, .category.h4 {
   justify-content: space-between;
 }
 
-.tag .tag-footer-icons i.fa-heart {
+.tag .card-footer .btn.favorited, .tag .card-footer .btn.hidden {
   color: #f893fc;
-}
-
-.tag .tag-footer-icons i {
-  display: none;
-}
-
-.tag.featured .tag-footer-icons i.fa-heart {
-  display: inline;
+  opacity: 1;
 }
 
 @keyframes pulsate {

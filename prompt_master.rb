@@ -106,6 +106,20 @@ class PromptMaster < Sinatra::Base
 
     haml :index, escape_html: false
   end
+
+  # delete category
+  delete "/category/:id" do
+    content_type :json
+
+    @category = Category.find_by_id(params[:id])
+    # respond with error if category not found
+    return {success: false, error: "Category not found"}.to_json if @category.nil?
+
+    # delete category
+    @category.destroy
+    {success: true}.to_json
+  end
+
   # add tag to featured tags
   put "/tag/:id/feature" do
     content_type :json
@@ -168,6 +182,19 @@ class PromptMaster < Sinatra::Base
 
     # rate tag
     @tag.update(rank: params[:rank])
+    {success: true}.to_json
+  end
+
+  # delete tag from database and all associated images from disk
+  delete "/tag/:id" do
+    content_type :json
+
+    @tag = Tag.find_by_id(params[:id])
+    # respond with error if tag not found
+    return {success: false, error: "Tag not found"}.to_json if @tag.nil?
+
+    # delete tag
+    @tag.destroy
     {success: true}.to_json
   end
 
