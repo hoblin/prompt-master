@@ -2,14 +2,16 @@
 // Once collect-tag button pressed textfield appears and tag is added to that comma-separated collection.
 let tagCollection = [];
 // accepts JSON string with tag data
-const collectTag = (tag) => {
-  const tagData = JSON.parse(tag);
+const collectTag = (tagId) => {
+  // Get name of tag from tag card in DOM by tagId
+  const tagBlock = document.getElementById(`tag-${tagId}`);
+  const tagName = tagBlock.querySelector(".card-title").innerHTML;
   const tagCollectionFloat = document.getElementById("tag-collection");
   // display float block if it's hidden
   tagCollectionFloat.style.display = "inline-block";
   const tagCollectionInput = document.getElementById("tag-collection-input");
   // add tag to collection
-  tagCollection.push(tagData.name);
+  tagCollection.push(tagName);
   // update textfield
   tagCollectionInput.value = tagCollection.join(", ");
 };
@@ -166,7 +168,7 @@ const showModal = (imageUrl, tagId) => {
   const collectButtons = document.querySelectorAll(".image-modal-collect-tag");
   collectButtons.forEach((button) => {
     button.onclick = () => {
-      collectTag(tagJson);
+      collectTag(tagId);
       imageModal.hide();
     };
   });
@@ -176,7 +178,7 @@ const showModal = (imageUrl, tagId) => {
   translateButtons.forEach((button) => {
     button.onclick = () => {
       const targetDomEle = document.getElementById("image-modal-title");
-      translate(tag.name, targetDomEle);
+      translate(tagName, targetDomEle);
     };
   });
 
