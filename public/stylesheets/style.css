@@ -7857,12 +7857,6 @@ h4.category button, .category.h4 button {
     line-height: 2rem;
   }
 }
-@media (min-width: 992px) {
-  .rating > label {
-    font-size: 1.5rem;
-    line-height: 1.5rem;
-  }
-}
 .rating > label:hover:before,
 .rating > label:hover ~ label:before {
   opacity: 1 !important;
