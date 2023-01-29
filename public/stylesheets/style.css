@@ -3728,6 +3728,36 @@ textarea.form-control-lg {
   border-color: #ff618c;
 }
 
+.btn-tag-rating {
+  color: #ffb454;
+  background-color: #15232d;
+  border-color: #15232d;
+}
+.btn-tag-rating:hover {
+  color: #ffb454;
+  background-color: #15232d;
+  border-color: #15232d;
+}
+.btn-check:focus + .btn-tag-rating, .btn-tag-rating:focus {
+  color: #ffb454;
+  background-color: #15232d;
+  border-color: #15232d;
+  box-shadow: 0 0 0 0.25rem rgba(56, 57, 51, 0.5);
+}
+.btn-check:checked + .btn-tag-rating, .btn-check:active + .btn-tag-rating, .btn-tag-rating:active, .btn-tag-rating.active, .show > .btn-tag-rating.dropdown-toggle {
+  color: #ffb454;
+  background-color: #15232d;
+  border-color: #15232d;
+}
+.btn-check:checked + .btn-tag-rating:focus, .btn-check:active + .btn-tag-rating:focus, .btn-tag-rating:active:focus, .btn-tag-rating.active:focus, .show > .btn-tag-rating.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.25rem rgba(56, 57, 51, 0.5);
+}
+.btn-tag-rating:disabled, .btn-tag-rating.disabled {
+  color: #ffb454;
+  background-color: #15232d;
+  border-color: #15232d;
+}
+
 .clearfix::after {
   display: block;
   clear: both;
@@ -7808,8 +7838,9 @@ h4.category button, .category.h4 button {
 
 .rating > label {
   position: relative;
-  width: 1.3rem;
-  font-size: 30px;
+  font-size: 2.5rem;
+  line-height: 2.5rem;
+  padding: 0.125rem 0.375rem 0.375rem;
   font-weight: 300;
   color: #ffb454;
   cursor: pointer;
@@ -7820,6 +7851,18 @@ h4.category button, .category.h4 button {
   opacity: 0;
 }
 
+@media (min-width: 768px) {
+  .rating > label {
+    font-size: 2rem;
+    line-height: 2rem;
+  }
+}
+@media (min-width: 992px) {
+  .rating > label {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+  }
+}
 .rating > label:hover:before,
 .rating > label:hover ~ label:before {
   opacity: 1 !important;
