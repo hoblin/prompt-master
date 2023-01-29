@@ -2,14 +2,16 @@
 // Once collect-tag button pressed textfield appears and tag is added to that comma-separated collection.
 let tagCollection = [];
 // accepts JSON string with tag data
-const collectTag = (tag) => {
-  const tagData = JSON.parse(tag);
+const collectTag = (tagId) => {
+  // Get name of tag from tag card in DOM by tagId
+  const tagBlock = document.getElementById(`tag-${tagId}`);
+  const tagName = tagBlock.querySelector(".card-title").innerHTML;
   const tagCollectionFloat = document.getElementById("tag-collection");
   // display float block if it's hidden
   tagCollectionFloat.style.display = "inline-block";
   const tagCollectionInput = document.getElementById("tag-collection-input");
   // add tag to collection
-  tagCollection.push(tagData.name);
+  tagCollection.push(tagName);
   // update textfield
   tagCollectionInput.value = tagCollection.join(", ");
 };
@@ -51,26 +53,30 @@ const translate = (string, targetDomEle) => {
 
 // Bootstrap 5 modal
 let imageModal;
-const showModal = (imageUrl, tagJson) => {
-  const tag = JSON.parse(tagJson);
+const showModal = (imageUrl, tagId) => {
+  // Get tag data from tag card in DOM by tagId
+  const tagBlock = document.getElementById(`tag-${tagId}`);
+  const tagFeatured = tagBlock.classList.contains("featured");
+  const tagHidden = tagBlock.classList.contains("hidden");
+  const tagName = tagBlock.querySelector(".card-title").innerHTML;
   // Set image
   const imageContainer = document.getElementById("image-modal-content");
   imageContainer.innerHTML = `<img src="${imageUrl}" />`;
   // Set title
   const modalTitle = document.getElementById("image-modal-title");
-  modalTitle.innerHTML = tag.name;
+  modalTitle.innerHTML = tagName;
   // Init featured buttons
   const featuredButtons = document.querySelectorAll(".image-modal-featured");
   const unfeaturedButtons = document.querySelectorAll(
     ".image-modal-unfeatured"
   );
   featuredButtons.forEach((button) => {
-    button.style.display = tag.featured ? "none" : "inline-block";
+    button.style.display = tagFeatured ? "none" : "inline-block";
     button.onclick = () => {
       $.ajax({
-        url: `/tag/${tag.id}/feature`,
+        url: `/tag/${tagId}/feature`,
         type: "PUT",
-        success: function (result) {
+        success: function (_result) {
           featuredButtons.forEach((button) => {
             button.style.display = "none";
           });
@@ -78,7 +84,7 @@ const showModal = (imageUrl, tagJson) => {
             button.style.display = "inline-block";
           });
           // show featured icon
-          const tagBlock = document.getElementById(`tag-${tag.id}`);
+          const tagBlock = document.getElementById(`tag-${tagId}`);
           tagBlock.classList.add("featured");
           // close modal
           imageModal.hide();
@@ -88,12 +94,12 @@ const showModal = (imageUrl, tagJson) => {
   });
 
   unfeaturedButtons.forEach((button) => {
-    button.style.display = tag.featured ? "inline-block" : "none";
+    button.style.display = tagFeatured ? "inline-block" : "none";
     button.onclick = () => {
       $.ajax({
-        url: `/tag/${tag.id}/unfeature`,
+        url: `/tag/${tagId}/unfeature`,
         type: "PUT",
-        success: function (result) {
+        success: function (_result) {
           featuredButtons.forEach((button) => {
             button.style.display = "inline-block";
           });
@@ -101,7 +107,7 @@ const showModal = (imageUrl, tagJson) => {
             button.style.display = "none";
           });
           // hide featured icon
-          const tagBlock = document.getElementById(`tag-${tag.id}`);
+          const tagBlock = document.getElementById(`tag-${tagId}`);
           tagBlock.classList.remove("featured");
           // close modal
           imageModal.hide();
@@ -114,12 +120,12 @@ const showModal = (imageUrl, tagJson) => {
   const hideButtons = document.querySelectorAll(".image-modal-hide");
   const unhideButtons = document.querySelectorAll(".image-modal-unhide");
   hideButtons.forEach((button) => {
-    button.style.display = tag.active ? "inline-block" : "none";
+    button.style.display = tagHidden ? "none" : "inline-block";
     button.onclick = () => {
       $.ajax({
-        url: `/tag/${tag.id}/hide`,
+        url: `/tag/${tagId}/hide`,
         type: "PUT",
-        success: function (result) {
+        success: function (_result) {
           hideButtons.forEach((button) => {
             button.style.display = "none";
           });
@@ -127,7 +133,7 @@ const showModal = (imageUrl, tagJson) => {
             button.style.display = "inline-block";
           });
           // remove tag block from page with parent
-          const tagBlock = document.getElementById(`tag-${tag.id}`);
+          const tagBlock = document.getElementById(`tag-${tagId}`);
           tagBlock.parentElement.remove();
           // close modal
           imageModal.hide();
@@ -136,12 +142,12 @@ const showModal = (imageUrl, tagJson) => {
     };
   });
   unhideButtons.forEach((button) => {
-    button.style.display = tag.active ? "none" : "inline-block";
+    button.style.display = tagHidden ? "inline-block" : "none";
     button.onclick = () => {
       $.ajax({
-        url: `/tag/${tag.id}/unhide`,
+        url: `/tag/${tagId}/unhide`,
         type: "PUT",
-        success: function (result) {
+        success: function (_result) {
           hideButtons.forEach((button) => {
             button.style.display = "inline-block";
           });
@@ -149,7 +155,7 @@ const showModal = (imageUrl, tagJson) => {
             button.style.display = "none";
           });
           // remove tag block from page
-          const tagBlock = document.getElementById(`tag-${tag.id}`);
+          const tagBlock = document.getElementById(`tag-${tagId}`);
           tagBlock.parentElement.remove();
           // close modal
           imageModal.hide();
@@ -162,7 +168,7 @@ const showModal = (imageUrl, tagJson) => {
   const collectButtons = document.querySelectorAll(".image-modal-collect-tag");
   collectButtons.forEach((button) => {
     button.onclick = () => {
-      collectTag(tagJson);
+      collectTag(tagId);
       imageModal.hide();
     };
   });
@@ -172,7 +178,7 @@ const showModal = (imageUrl, tagJson) => {
   translateButtons.forEach((button) => {
     button.onclick = () => {
       const targetDomEle = document.getElementById("image-modal-title");
-      translate(tag.name, targetDomEle);
+      translate(tagName, targetDomEle);
     };
   });
 

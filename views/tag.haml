@@ -3,7 +3,7 @@
     .swiper-wrapper
       - tag.images.each do |image|
         .swiper-slide
-          %img{alt: "#{tag.name}", src: "#{image.url}", onclick: "showModal('#{image.url}', '#{tag.to_json}')"}
+          %img{alt: "#{tag.name}", src: "#{image.url}", onclick: "showModal('#{image.url}', '#{tag.id}')"}
     .swiper-scrollbar
   .card-body
     %h5.card-title= tag.name
@@ -15,9 +15,9 @@
     .card-footer
       .d-flex.justify-content-between
         .btn-group.p-2
-          %button.btn.btn-link{class: "#{tag.featured ? 'favorited' : ''}", disabled: true}
+          %button.btn.btn-link.btn-tag-featured{disabled: true}
             %i.fa.fa-heart
-          %button.btn.btn-link{class: "#{tag.active ? '' : 'hidden'}", disabled: true}
+          %button.btn.btn-link.btn-tag-hidden{disabled: true}
             %i.fa.fa-eye-slash
         .btn-group.p-2
           %button.btn.btn-tag-delete{type: "button", onclick: "confirmDeleteModalShow('tag', #{tag.id}, '#{tag.name}')"}
