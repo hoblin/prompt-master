@@ -1,17 +1,24 @@
-.tag{id: "tag-#{tag.id}", class: "#{tag.featured ? 'featured' : ''} #{tag.hidden ? 'hidden' : ''}"}
+.card.tag{id: "tag-#{tag.id}", class: "#{tag.featured ? 'featured' : ''} #{tag.hidden ? 'hidden' : ''}"}
   .swiper{id: tag.tag_name, data: { id: tag.tag_name }}
     .swiper-wrapper
       - tag.images.each do |image|
         .swiper-slide
           %img{alt: "#{tag.name}", src: "#{image.url}", onclick: "showModal('#{image.url}', '#{tag.to_json}')"}
     .swiper-scrollbar
-  .tag-footer
-    .actions.d-flex.justify-content-between
-      .rating
-        - 5.times.each do |i|
-          - rating_id = "tag#{tag.id}-star#{i+1}"
-          %input{type: "radio", id: rating_id, name: "tag#{tag.id}-rating", value: "#{i+1}", checked: (tag.rank == 5 - i)}
-          %label{for: rating_id, onclick: "rateTag(#{tag.id}, #{i+1})"} ☆
-      .tag-footer-icons
-        %i.fa-solid.fa-heart
-    .tag-name= tag.name
+  .card-body
+    %h5.card-title= tag.name
+    .rating
+      - 5.times.each do |i|
+        - rating_id = "tag#{tag.id}-star#{i+1}"
+        %input{type: "radio", id: rating_id, name: "tag#{tag.id}-rating", value: "#{i+1}", checked: (tag.rank == 5 - i)}
+        %label{for: rating_id, onclick: "rateTag(#{tag.id}, #{i+1})"} ☆
+    .card-footer
+      .d-flex.justify-content-between
+        .btn-group.p-2
+          %button.btn.btn-link{class: "#{tag.featured ? 'favorited' : ''}", disabled: true}
+            %i.fa.fa-heart
+          %button.btn.btn-link{class: "#{tag.active ? '' : 'hidden'}", disabled: true}
+            %i.fa.fa-eye-slash
+        .btn-group.p-2
+          %button.btn.btn-tag-delete{type: "button", onclick: "confirmDeleteModalShow('tag', #{tag.id}, '#{tag.name}')"}
+            %i.fa.fa-trash

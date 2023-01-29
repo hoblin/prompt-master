@@ -180,6 +180,60 @@ const showModal = (imageUrl, tagJson) => {
   imageModal.show();
 };
 
+// Function to delete tag from database on button click
+// with confirmation modal
+
+// confirm delete modal for tag and category
+let confirmDeleteModal;
+const confirmDeleteModalShow = (kind, id, name) => {
+  const confirmDeleteModalTitle = document.getElementById(
+    "confirm-delete-modal-title"
+  );
+  confirmDeleteModalTitle.innerHTML = `Delete ${kind} "${name}"?`;
+  const confirmDeleteModalBody = document.getElementById(
+    "confirm-delete-modal-body"
+  );
+  confirmDeleteModalBody.innerHTML = `Are you sure you want to delete this ${kind}? All images associated with this ${kind} will be deleted and cannot be recovered.`;
+  const confirmDeleteModalButton = document.getElementById(
+    "confirm-delete-modal-button"
+  );
+  confirmDeleteModalButton.onclick = () => {
+    if (kind === "tag") {
+      deleteTag(id);
+    } else if (kind === "category") {
+      deleteCategory(id);
+    }
+  };
+  confirmDeleteModal.show();
+};
+
+// DELETE request to /tag/:id
+function deleteTag(tagId) {
+  $.ajax({
+    url: `/tag/${tagId}`,
+    type: "DELETE",
+    success: function (result) {
+      // remove tag block from page
+      const tagBlock = document.getElementById(`tag-${tagId}`);
+      tagBlock.parentElement.remove();
+      // close modal
+      confirmDeleteModal.hide();
+    },
+  });
+}
+
+// DELETE request to /category/:id
+function deleteCategory(categoryId) {
+  $.ajax({
+    url: `/category/${categoryId}`,
+    type: "DELETE",
+    success: function (result) {
+      // redirect to home page
+      window.location.href = "/";
+    },
+  });
+}
+
 // Top button
 function topFunction() {
   document.body.scrollTop = 0;
@@ -249,10 +303,18 @@ function rateTag(tagId, rating) {
 
 // on load
 $(document).ready(function () {
-  // Init Bootstrap modal
+  // Init image modal
   if (imageModal === undefined) {
     imageModal = new bootstrap.Modal(
       document.getElementById("image-modal"),
+      {}
+    );
+  }
+
+  // Init confirm delete modal
+  if (confirmDeleteModal === undefined) {
+    confirmDeleteModal = new bootstrap.Modal(
+      document.getElementById("confirm-delete-modal"),
       {}
     );
   }

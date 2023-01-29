@@ -29,6 +29,17 @@
       = yield
     #footer
       = partial :buttons
+      -# Confirm modal structure
+      #confirm-delete-modal.modal{tabindex: "-1"}
+        .modal-dialog
+          .modal-content
+            .modal-header
+              %h5#confirm-delete-modal-title.modal-title
+            #confirm-delete-modal-body.modal-body
+            .modal-footer
+              %button.btn.btn-secondary{type: "button", data: {'bs-dismiss': 'modal'}} Cancel
+              %button#confirm-delete-modal-button.btn.btn-danger{type: "button"} Delete
+      -# Image modal structure
       #image-modal.modal{tabindex: "-1"}
         .modal-dialog
           .modal-content

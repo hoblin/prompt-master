@@ -3,13 +3,16 @@ require "active_support/core_ext/string/inflections"
 # Tag is a directory in the category folder
 # Image is a file in the tag folder
 class Tag < ActiveRecord::Base
-  belongs_to :category, dependent: :destroy
+  belongs_to :category
 
   validates :name, presence: true
 
   scope :active, -> { where(active: true) }
   scope :hidden, -> { where(active: false) }
   scope :featured, -> { where(featured: true) }
+
+  # delete all images in tag folder when tag is deleted
+  before_destroy :delete_images
 
   def images
     # return empty array if path doesn't exist
@@ -27,6 +30,10 @@ class Tag < ActiveRecord::Base
 
   def hidden
     !active
+  end
+
+  def delete_images
+    FileUtils.rm_rf(path)
   end
 
   def tag_name

@@ -50,6 +50,7 @@ $modal-content-bg: $light
 $modal-content-border-color: $orange
 $modal-backdrop-bg: $primary
 
+
 @import "../../bootstrap/scss/variables"
 @import "../../bootstrap/scss/mixins"
 
@@ -66,6 +67,11 @@ $modal-backdrop-bg: $primary
 @import "../../bootstrap/scss/navbar"
 @import "../../bootstrap/scss/modal"
 @import "../../bootstrap/scss/close"
+
+// Custom buttons
+.btn-tag-delete
+  @include button-variant($primary, $danger, $danger)
+
 
 @import "../../bootstrap/scss/helpers"
 @import "../../bootstrap/scss/utilities"
@@ -153,12 +159,9 @@ h4.category
 .modal-footer
   justify-content: space-between
 // Tag
-.tag .tag-footer-icons i.fa-heart
+.tag .card-footer .btn.favorited, .tag .card-footer .btn.hidden
   color: $pink
-.tag .tag-footer-icons i
-  display: none
-.tag.featured .tag-footer-icons i.fa-heart
-  display: inline
+  opacity: 1
 // Pulsation animation for api call button in loading state
 @keyframes pulsate
   0%
