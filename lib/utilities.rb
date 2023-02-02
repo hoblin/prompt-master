@@ -35,14 +35,15 @@ class Utilities
         .map { |file| file.split("/").last }.uniq
         .select { |filename| filename =~ /^\d{3}\.jpg$/ }
         .map { |filename| filename.split(".").first }
-        .map(&:to_i).max
+        .map(&:to_i).max || -1
       # find all the images with the same name in source folder
       source_files = Dir["./inspiration/#{SYSTEM_FOLDER}/#{category}/**/*"]
         .map { |file| file.split("/").last }.uniq
         .select { |filename| filename =~ /^\d{3}\.jpg$/ }
-      # collect tags from source category
+      # collect tags folder names from source category folder skipping the files
       source_tags = Dir["./inspiration/#{SYSTEM_FOLDER}/#{category}/*"]
         .map { |tag| tag.split("/").last }
+        .select { |tag| tag !~ /^\d{3}\.jpg$/ }
       # merge images with the same name
       source_files.each do |source_file|
         last_filename += 1
