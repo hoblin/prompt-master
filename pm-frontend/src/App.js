@@ -1,10 +1,13 @@
 import React from 'react'
-import { ConfigProvider, Layout, Space, Typography } from 'antd'
+import { ConfigProvider, Layout, Space } from 'antd'
 
 import './index.css'
 
 // import theme
 import theme from './theme'
+
+// import pages
+import CategoriesPage from './pages/categories'
 
 
 function App() {
@@ -24,8 +27,7 @@ function App() {
           >Header</Header>
           <Content style={{ backgroundColor: theme.token.colorPrimaryBg }}
           >
-            <Typography.Title style={{ color: theme.token.colorPrimary }}
-            >Content</Typography.Title>
+            <CategoriesPage />
           </Content>
           <Footer>Footer</Footer>
         </Layout>

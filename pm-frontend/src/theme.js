@@ -7,7 +7,7 @@ const darkTheme = {
   token: {
     fontFamily: "Source Code Pro, monospace",
     colorPrimary: "#ffb454",
-    colorPrimaryBg: "#183549",
+    colorPrimaryBg: "#15232d",
     colorBgContainer: "#183549",
     colorBgLayout: "#15232d",
     colorBgElevated: "#15232d",
