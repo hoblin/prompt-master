@@ -10,7 +10,7 @@ import theme from './theme'
 function App() {
   const { Header, Footer, Sider, Content } = Layout;
   return (
-    <ConfigProvider theme={{...theme}}>
+    <ConfigProvider theme={{ ...theme }}>
       <Space
         direction="vertical"
         style={{
@@ -20,9 +20,12 @@ function App() {
         size={[0, 48]}
       >
         <Layout>
-          <Header>Header</Header>
-          <Content>
-            <Typography.Title>Content</Typography.Title>
+          <Header style={{ backgroundColor: theme.token.colorBgLayout }}
+          >Header</Header>
+          <Content style={{ backgroundColor: theme.token.colorPrimaryBg }}
+          >
+            <Typography.Title style={{ color: theme.token.colorPrimary }}
+            >Content</Typography.Title>
           </Content>
           <Footer>Footer</Footer>
         </Layout>

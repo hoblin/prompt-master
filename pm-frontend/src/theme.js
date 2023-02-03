@@ -5,6 +5,7 @@ import { theme } from 'antd';
 const darkTheme = {
   algorithm: theme.darkAlgorithm,
   token: {
+    fontFamily: "Source Code Pro, monospace",
     colorPrimary: "#ffb454",
     colorPrimaryBg: "#183549",
     colorBgContainer: "#183549",
