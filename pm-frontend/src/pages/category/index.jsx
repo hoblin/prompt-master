@@ -23,7 +23,7 @@ import {
 } from './store';
 
 const CategoryPage = () => {
-  const tagBlockExtraHeight = 116 + 100 + 8; // header + footer + v-margin
+  const tagBlockExtraHeight = 65 + 95 + 49 + 16; // header + (body - image size) + actions + margin
   const fetchCategory = useFetchCategory();
   const category = useCategory();
   const { isLoading: isCategoryLoading } = useCategoryStates();
@@ -100,12 +100,6 @@ const CategoryPage = () => {
     );
   }
 
-  // const [ list ] = useVirtualList(tagsChunks, {
-  //   containerTarget: containerRef,
-  //   wrapperTarget: wrapperRef,
-  //   itemHeight: tagHeight,
-  //   overscan: 4,
-  // });
   return (
     <>
       {/* <Category category={category} isLoading={isCategoryLoading} key={`category-${id}`} /> */}

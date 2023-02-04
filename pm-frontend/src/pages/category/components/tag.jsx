@@ -1,8 +1,10 @@
 // Tag card with images carousel name and actin buttons
 
 import React, { useMemo } from 'react';
-import { Card, Image, Skeleton, Typography, Carousel, Rate } from 'antd';
 import { useResponsive } from 'ahooks';
+
+import { Card, Image, Skeleton, Typography, Carousel, Rate, Space } from 'antd';
+import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 
 import { getImageSize, getColumns } from '../../../utils';
 import { useUpdateTag } from '../store';
@@ -48,9 +50,12 @@ const Tag = ({ tag, category }) => {
 
 
   // Actions buttons collection
-  const Actions = () => (
-    <Rate onChange={updateRating} value={rating} />
-  );
+  const actions = [
+          <EditOutlined />,
+          <EllipsisOutlined />,
+          <SettingOutlined />,
+
+  ];
 
   // Images carousel
   const ImagesCarousel = () => (
@@ -69,8 +74,9 @@ const Tag = ({ tag, category }) => {
   )
 
   return (
-    <Card title={title} actions={[<Actions />]}>
+    <Card title={title} actions={actions}  style={{ textAlign: 'center' }}>
       <ImagesCarousel />
+      <Rate value={rating} onChange={updateRating} style={{ marginTop: 16 }} />
     </Card>
   );
 }

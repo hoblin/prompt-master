@@ -8,7 +8,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  useNavigate
 } from "react-router-dom";
 
 import './index.css'
@@ -21,38 +21,48 @@ import CategoriesPage from './pages/categories'
 import CategoryPage from './pages/category'
 
 // categories store
-import { useCategories } from './pages/categories/store'
+import { useCategories, useCategoriesStates, useFetchCategories } from './pages/categories/store'
 
 function App() {
   const { Header, Footer, Content } = Layout;
 
   const categories = useCategories()
+  const { isLoading, isLoaded } = useCategoriesStates()
+  const fetchCategories = useFetchCategories()
+  const navigate = useNavigate()
+
+  React.useEffect(() => {
+    if (!isLoading && !isLoaded) {
+      fetchCategories()
+    }
+  }, [isLoading, isLoaded, fetchCategories])
 
   // build categories menu items function
   const buildCategoriesMenuItems = (categories) => {
     return categories.map((category) => {
+      const path = `/categories/${category.id}`
       return {
-        label: <Link to={`/categories/${category.id}`}>{category.name}</Link>,
-        key: category.id,
-        icon: <FolderOutlined />,
-        path: `/categories/${category.id}`,
+        label: category.name,
+        key: path,
+        icon: <FolderOutlined />
       }
     })
   }
 
+  const handleMenuClick = ({ key }) => {
+    navigate(key)
+  }
+
   const menuItems = [
     {
-      label:
-      <Link to="/"><Typography.Title level={5}>PM</Typography.Title></Link>,
-      key: 'home',
-      path: '/'
+      label: <Typography.Title level={5}>PM</Typography.Title>,
+      key: '/'
     },
-    { label: 'Categories', key: 'categories', icon: <AppstoreOutlined />, children: buildCategoriesMenuItems(categories) },
+    { label: 'Categories', key: '/categories', icon: <AppstoreOutlined />, children: buildCategoriesMenuItems(categories) },
   ]
 
   return (
     <ConfigProvider theme={{ ...theme }}>
-      <Router>
         <Layout>
           <Header style={{ backgroundColor: theme.token.colorBgLayout }}
           >
@@ -62,6 +72,8 @@ function App() {
               defaultSelectedKeys={['home']}
               style={{ backgroundColor: theme.token.colorBgLayout }}
               items={menuItems}
+              selectedKeys={window.location.pathname}
+              onClick={handleMenuClick}
             />
           </Header>
           <Content style={{ backgroundColor: theme.token.colorPrimaryBg }}
@@ -73,7 +85,6 @@ function App() {
           </Content>
           <Footer>Footer</Footer>
         </Layout>
-      </Router>
     </ConfigProvider>
   );
 }
