@@ -218,4 +218,72 @@ class PromptMaster < Sinatra::Base
   get "/inspiration/*" do
     send_file "./inspiration/#{params[:splat].first}"
   end
+  # serve static files from inspiration folder
+  get "/api/inspiration/*" do
+    send_file "./inspiration/#{params[:splat].first}"
+  end
+
+  # API
+  # get all categories
+  get "/api/categories" do
+    content_type :json
+
+    # Get all categories with first tag avoiding N+1 queries
+    Category.includes(:tags).map do |category|
+      {
+        id: category.id,
+        name: category.name,
+        image: category.image,
+        image_size: category.image_size,
+        tags_count: category.tags.size,
+        sets_count: category.tags.first&.images&.count || 0
+      }
+    end.to_json
+  end
+
+  # get category by id
+  get "/api/category/:id" do
+    content_type :json
+
+    @category = Category.find_by_id(params[:id])
+    # respond with error if category not found
+    return {success: false, error: "Category not found"}.to_json if @category.nil?
+
+    # Get category with first tag avoiding N+1 queries
+    {
+      id: @category.id,
+      name: @category.name,
+      image: @category.image,
+      image_size: @category.image_size,
+      tags_count: @category.tags.size,
+      sets_count: @category.tags.first&.images&.count || 0
+    }.to_json
+  end
+
+  # get category tags
+  get "/api/category/:id/tags" do
+    content_type :json
+
+    @category = Category.find_by_id(params[:id])
+    # respond with error if category not found
+    return {success: false, error: "Category not found"}.to_json if @category.nil?
+
+    # Get category tags
+    @category.tags.map do |tag|
+      {
+        id: tag.id,
+        name: tag.name,
+        images: tag.images.map do |image|
+          {
+            name: image.name,
+            url: image.url
+          }
+        end,
+        active: tag.active,
+        featured: tag.featured,
+        rank: tag.rank
+      }
+    end.to_json
+  end
+
 end

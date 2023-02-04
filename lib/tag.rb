@@ -24,6 +24,19 @@ class Tag < ActiveRecord::Base
       .map { |image| Image.new(image, self) }
   end
 
+  def cover
+    images.first
+  end
+
+  def image_size
+    # Get image size from first image file
+    return nil if cover.nil?
+    FastImage.size(cover.path)
+  end
+
+
+
+
   def path
     "./inspiration/#{category.name}/#{name}"
   end

@@ -22,3 +22,5 @@ group :development do
 end
 
 gem "pry", "~> 0.14.1"
+
+gem "fastimage", "~> 2.2"
