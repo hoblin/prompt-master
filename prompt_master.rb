@@ -269,21 +269,26 @@ class PromptMaster < Sinatra::Base
     return {success: false, error: "Category not found"}.to_json if @category.nil?
 
     # Get category tags
-    @category.tags.map do |tag|
-      {
-        id: tag.id,
-        name: tag.name,
-        images: tag.images.map do |image|
-          {
-            name: image.name,
-            url: image.url
-          }
-        end,
-        active: tag.active,
-        featured: tag.featured,
-        rank: tag.rank
-      }
-    end.to_json
+    @category.tags.map(&:as_json).to_json
   end
 
+  # update tag
+  put "/api/tag/:id" do
+    content_type :json
+
+    @tag = Tag.find_by_id(params[:id])
+    # respond with error if tag not found
+    return {success: false, error: "Tag not found"}.to_json if @tag.nil?
+
+    # filter allowed params (rank, active, featured)
+    params = request.body.read
+    params = JSON.parse(params)
+    params = params.select { |k, v| %w[rank active featured].include?(k) }
+
+    # update tag
+    @tag.update(params)
+
+    # respond with updated tag
+    @tag.to_json
+  end
 end

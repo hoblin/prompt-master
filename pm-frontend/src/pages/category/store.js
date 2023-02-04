@@ -47,6 +47,40 @@ export const useTagsStore = create((set) => ({
     set({ tags, isLoading: false, isLoaded: true })
   },
   unsetTags: () => set({ tags: [], isLoading: false, isLoaded: false }),
+  updateTag: async (tag) => {
+    // API call to update tag
+    const response = await fetch(`/api/tag/${tag.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(tag),
+    })
+    // If API call is successful, update the tag in the store
+    console.log(response)
+    if (response.ok) {
+      const updatedTag = await response.json()
+      set((state) => ({
+        ...state,
+        tags: state.tags.map((tag) => {
+          if (tag.id === updatedTag.id) {
+            return updatedTag
+          }
+          return tag
+        })
+      }))
+    }
+  },
+  deleteTag: async (tag) => {
+    // API call to delete tag
+    const response = await fetch(`/api/tag/${tag.id}`, {
+      method: 'DELETE',
+    })
+    // If API call is successful, delete the tag in the store
+    if (response.ok) {
+      set((state) => ({
+        ...state,
+        tags: state.tags.filter((t) => t.id !== tag.id),
+      }))
+    }
+  }
 }))
 
 export const useFetchTags = () => {
@@ -66,4 +100,8 @@ export const useTagsStates = () => {
 
 export const useUnsetTags = () => {
   return useTagsStore(({ unsetTags }) => unsetTags)
+}
+
+export const useUpdateTag = () => {
+  return useTagsStore(({ updateTag }) => updateTag)
 }

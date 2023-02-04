@@ -23,6 +23,7 @@ import {
 } from './store';
 
 const CategoryPage = () => {
+  const tagBlockExtraHeight = 116 + 100 + 8; // header + footer + v-margin
   const fetchCategory = useFetchCategory();
   const category = useCategory();
   const { isLoading: isCategoryLoading } = useCategoryStates();
@@ -58,8 +59,7 @@ const CategoryPage = () => {
     // if category is not loaded, set height to 500
     if (!category.image_size) return 500;
     const imageSize = getImageSize(category.image_size, columns);
-    const titleHeight = 116 + 8;
-    const height = imageSize[1] + titleHeight;
+    const height = imageSize[1] + tagBlockExtraHeight;
 
     return height;
   }

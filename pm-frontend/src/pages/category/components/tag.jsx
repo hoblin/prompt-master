@@ -1,14 +1,16 @@
 // Tag card with images carousel name and actin buttons
 
 import React, { useMemo } from 'react';
-import { Card, Image, Skeleton, Typography, Carousel } from 'antd';
+import { Card, Image, Skeleton, Typography, Carousel, Rate } from 'antd';
 import { useResponsive } from 'ahooks';
 
 import { getImageSize, getColumns } from '../../../utils';
+import { useUpdateTag } from '../store';
 
 const Tag = ({ tag, category }) => {
-  const { name, images } = tag;
+  const { name, images, rank: rating } = tag;
   const { image_size } = category;
+  const updateTag = useUpdateTag();
   const breakpoints = useResponsive();
   const columns = useMemo(() => getColumns(breakpoints), [breakpoints]);
   const imageSize = useMemo(() => getImageSize(image_size, columns), [image_size, columns]);
@@ -39,6 +41,18 @@ const Tag = ({ tag, category }) => {
     );
   }
 
+  // Rating component
+  const updateRating = (rating) => {
+    updateTag({ ...tag, rank: rating });
+  };
+
+
+  // Actions buttons collection
+  const Actions = () => (
+    <Rate onChange={updateRating} value={rating} />
+  );
+
+  // Images carousel
   const ImagesCarousel = () => (
     <Carousel>
       {images.map((image) => (
@@ -55,7 +69,7 @@ const Tag = ({ tag, category }) => {
   )
 
   return (
-    <Card title={title}>
+    <Card title={title} actions={[<Actions />]}>
       <ImagesCarousel />
     </Card>
   );

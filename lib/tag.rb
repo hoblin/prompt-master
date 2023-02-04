@@ -34,8 +34,27 @@ class Tag < ActiveRecord::Base
     FastImage.size(cover.path)
   end
 
+  def as_json
+    {
+      id: id,
+      name: name,
+      category_id: category_id,
+      images: images.map do |image|
+        {
+          name: image.name,
+          url: image.url
+        }
+      end,
+      rank: rank,
+      active: active,
+      featured: featured,
+      image_size: image_size
+    }
+  end
 
-
+  def to_json
+    as_json.to_json
+  end
 
   def path
     "./inspiration/#{category.name}/#{name}"
