@@ -37,7 +37,7 @@ class Category < ActiveRecord::Base
   end
 
   def image
-    tags.first&.cover&.url
+    tags.active.order('rank DESC').first&.cover&.url
   end
 
   def image_size

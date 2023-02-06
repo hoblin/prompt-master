@@ -1,36 +1,40 @@
 // Category page with category card and tags list virtualized
-import React, { useEffect, useRef, useMemo } from 'react';
-import { Row, Col, List, Skeleton } from 'antd';
+import React, { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useResponsive, useUnmount } from 'ahooks';
 import { FixedSizeList as VList } from 'react-window';
+import { Row, Col, FloatButton } from 'antd';
+// FontAwesome icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 import { getImageSize, getColumns } from '../../utils';
 
-import Category from './components/category';
+// import Category from './components/category';
 import Tag from './components/tag';
 
 // import Category and Tags stores
 import {
   useCategory,
   useFetchCategory,
-  useCategoryStates,
   useUnsetCategory,
   useTags,
   useFetchTags,
   useTagsStates,
-  useUnsetTags
+  useUnsetTags,
+  useSetTagImagesNames,
+  useSlide,
 } from './store';
 
-const CategoryPage = () => {
+const CategoryPage = (props) => {
   const tagBlockExtraHeight = 65 + 95 + 49 + 16; // header + (body - image size) + actions + margin
   const fetchCategory = useFetchCategory();
   const category = useCategory();
-  const { isLoading: isCategoryLoading } = useCategoryStates();
 
   const fetchTags = useFetchTags();
   const tags = useTags();
-  const { isLoading: isTagsLoading } = useTagsStates();
+  const { tagImagesNames } = useTagsStates();
+  const { slideLeft, slideRight } = useSlide();
 
   const { id } = useParams();
 
@@ -41,6 +45,12 @@ const CategoryPage = () => {
   useEffect(() => {
     fetchTags(category.id);
   }, [fetchTags, category.id]);
+
+  // set tag images names for slider store when tags loaded
+  const setTagImagesNames = useSetTagImagesNames();
+  useEffect(() => {
+    setTagImagesNames(tagImagesNames);
+  }, [setTagImagesNames, tagImagesNames]);
 
   // On unmount, unset category and tags
   const unsetCategory = useUnsetCategory();
@@ -108,9 +118,27 @@ const CategoryPage = () => {
         height={screenHeight()}
         itemCount={tagsChunks.length}
         itemSize={tagHeight()}
+        overscanCount={1}
       >
         {renderRow}
       </VList>
+      {/* <FloatButton.Group>
+        <FloatButton type="primary" icon={<FontAwesomeIcon icon={faSearch} />} />
+        <FloatButton type="primary" icon={<FontAwesomeIcon icon={faChevronUp} />} />
+      </FloatButton.Group> */}
+      {/* Global Slider buttons on the left */}
+      <FloatButton
+      type="primary"
+      icon={<FontAwesomeIcon icon={faChevronLeft} />}
+      onClick={slideLeft}
+      style={{left: 8}}
+    />
+      <FloatButton
+      type="primary"
+      icon={<FontAwesomeIcon icon={faChevronRight} />}
+      onClick={slideRight}
+      style={{left: 58}}
+    />
     </>
   );
 }
