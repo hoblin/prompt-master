@@ -59,7 +59,7 @@ const Tag = (props) => {
             height={imageSize[1]}
             placeholder={true}
             preview={false}
-            onClick={() => setPreviewVisible(true)}
+            onClick={() => columns > 1 && setPreviewVisible(true)}
           />
         </swiper-slide>
       )
@@ -67,10 +67,13 @@ const Tag = (props) => {
   }, [tagImagesNames, tagImages, imageSize, id]);
 
   const previewGroup = useMemo(() => {
+    // disable preview group for mobile devices
+    if (columns === 1) {
+      return null;
+    }
     return (
       <div style={{ display: 'none' }}>
         <Image.PreviewGroup
-          current={globalIndex}
           preview={{
             visible: previewVisible,
             onVisibleChange: (vis) => setPreviewVisible(vis),
@@ -86,7 +89,7 @@ const Tag = (props) => {
         </Image.PreviewGroup>
       </div>
     )
-  }, [tagImages, id, previewVisible]);
+  }, [tagImages, id, previewVisible, columns]);
 
   // Actions buttons collection
   const actions = [
