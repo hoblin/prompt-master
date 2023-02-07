@@ -74,13 +74,12 @@ const CategoryPage = (props) => {
     return height;
   }
 
-  // Get screen height minus header and footer
+  // Get screen height minus header
   const screenHeight = () => {
     const header = document.querySelector('.ant-layout-header');
-    const footer = document.querySelector('.ant-layout-footer');
-    // if header or footer is not found, set height to 0
-    if (!header || !footer) return 0;
-    const height = window.innerHeight - header.offsetHeight - footer.offsetHeight;
+    // if header is not found, set height to 0
+    if (!header) return 0;
+    const height = window.innerHeight - header.offsetHeight;
     return height;
   }
 

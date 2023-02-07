@@ -28,7 +28,7 @@ import { register } from 'swiper/element/bundle';
 register();
 
 function App() {
-  const { Header, Footer, Content } = Layout;
+  const { Header, Content } = Layout;
 
   const categories = useCategories()
   const { isLoading, isLoaded } = useCategoriesStates()
@@ -87,7 +87,6 @@ function App() {
               <Route path="/" element={<CategoriesPage />} />
             </Routes>
           </Content>
-          <Footer>Footer</Footer>
         </Layout>
     </ConfigProvider>
   );
