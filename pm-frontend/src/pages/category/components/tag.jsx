@@ -2,8 +2,11 @@
 import React, { useMemo, useState } from 'react';
 import { useResponsive } from 'ahooks';
 
-import { Card, Image, Skeleton, Typography, Carousel, Rate } from 'antd';
+import { Card, Image, Skeleton, Typography, Carousel, Rate, Tooltip } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+// fontawesome icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
 
 import { getImageSize, getColumns } from '../../../utils';
 import { useUpdateTag, useTagImagesNames, useIndex } from '../store';
@@ -17,6 +20,15 @@ const Tag = (props) => {
   const columns = useMemo(() => getColumns(breakpoints), [breakpoints]);
   const imageSize = useMemo(() => getImageSize(image_size, columns), [image_size, columns]);
   const [previewVisible, setPreviewVisible] = useState(false);
+  // copy tag name to clipboard
+  const [copied, setCopied] = useState(false);
+  const copyHandler = () => {
+    navigator.clipboard.writeText(name);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 3000);
+  };
 
   // Images sliding
   const tagImagesNames = useTagImagesNames();
@@ -91,9 +103,21 @@ const Tag = (props) => {
     )
   }, [tagImages, id, previewVisible, columns]);
 
+  const CopyButton = () => (
+    <Tooltip title={copied ? 'Copied' : 'Copy'} placement="bottom">
+      <div>
+        <FontAwesomeIcon
+          icon={faCopy}
+          onClick={copyHandler}
+          style={{ cursor: 'pointer' }}
+        />
+      </div>
+    </Tooltip>
+  );
+
   // Actions buttons collection
   const actions = [
-    <EditOutlined />,
+    <CopyButton />,
     <EllipsisOutlined />,
     <SettingOutlined />,
   ];
@@ -113,13 +137,13 @@ const Tag = (props) => {
     title={title}
     actions={actions}
     style={{ textAlign: 'center' }}
-  >
+    >
       <swiper-container
       loop="true"
       navigation="true"
       pagination="true"
       initial-slide={globalIndex}
-    >
+      >
         {images}
       </swiper-container>
       {previewGroup}
