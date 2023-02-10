@@ -3,17 +3,42 @@ import React, { useMemo, useState } from 'react';
 import { useResponsive } from 'ahooks';
 
 import { Card, Image, Skeleton, Typography, Carousel, Rate, Tooltip } from 'antd';
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 // fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCopy,
+  // favorite icons
+  faHeart as faHeartSolid,
+  // hide icon
+  faEyeSlash as faEyeSlashSolid,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  faHeart as faHeartRegular,
+  faEyeSlash as faEyeSlashRegular,
+} from '@fortawesome/free-regular-svg-icons';
 
 import { getImageSize, getColumns } from '../../../utils';
 import { useUpdateTag, useTagImagesNames, useIndex } from '../store';
 
+// theme
+import theme from '../../../theme';
+const {
+    colorPrimary,
+    colorTextSecondary: colorSecondary,
+    colorTextTertiary: colorTertiary,
+    colorTextQuaternary: colorQuaternary,
+  } = theme.token;
+
 const Tag = (props) => {
   const { tag, category } = props;
-  const { name, images: tagImages, rank: rating, id } = tag;
+  const {
+    name,
+    images: tagImages,
+    rank: rating,
+    id,
+    active,
+    featured: favorite,
+  } = tag;
   const { image_size } = category;
   const updateTag = useUpdateTag();
   const breakpoints = useResponsive();
@@ -115,11 +140,53 @@ const Tag = (props) => {
     </Tooltip>
   );
 
+  const FavoriteButton = () => {
+    const icon = favorite ? faHeartSolid : faHeartRegular;
+    const title = favorite ? 'Remove from favorites' : 'Add to favorites';
+    const color = favorite ? colorQuaternary : colorTertiary;
+
+    const onClick = () => {
+      updateTag({ ...tag, featured: !favorite });
+    };
+    return (
+      <Tooltip title={title} placement="bottom">
+        <div>
+          <FontAwesomeIcon
+            icon={icon}
+            onClick={onClick}
+            style={{ cursor: 'pointer', color }}
+          />
+        </div>
+      </Tooltip>
+    );
+  }
+
+  const HideButton = () => {
+    const icon = active ? faEyeSlashRegular : faEyeSlashSolid;
+    const title = active ? 'Hide' : 'Show';
+    const color = active ? colorTertiary : colorQuaternary;
+
+    const onClick = () => {
+      updateTag({ ...tag, active: !active });
+    };
+    return (
+      <Tooltip title={title} placement="bottom">
+        <div>
+          <FontAwesomeIcon
+            icon={icon}
+            onClick={onClick}
+            style={{ cursor: 'pointer', color }}
+          />
+        </div>
+      </Tooltip>
+    );
+  }
+
   // Actions buttons collection
   const actions = [
     <CopyButton />,
-    <EllipsisOutlined />,
-    <SettingOutlined />,
+    <FavoriteButton />,
+    <HideButton />,
   ];
 
   if (!name) {
