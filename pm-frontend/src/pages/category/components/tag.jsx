@@ -134,7 +134,7 @@ const Tag = (props) => {
         <FontAwesomeIcon
           icon={faCopy}
           onClick={copyHandler}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', color: colorPrimary }}
         />
       </div>
     </Tooltip>
@@ -143,7 +143,7 @@ const Tag = (props) => {
   const FavoriteButton = () => {
     const icon = favorite ? faHeartSolid : faHeartRegular;
     const title = favorite ? 'Remove from favorites' : 'Add to favorites';
-    const color = favorite ? colorQuaternary : colorTertiary;
+    const color = favorite ? colorQuaternary : colorPrimary;
 
     const onClick = () => {
       updateTag({ ...tag, featured: !favorite });
@@ -164,7 +164,7 @@ const Tag = (props) => {
   const HideButton = () => {
     const icon = active ? faEyeSlashRegular : faEyeSlashSolid;
     const title = active ? 'Hide' : 'Show';
-    const color = active ? colorTertiary : colorQuaternary;
+    const color = active ? colorPrimary : colorQuaternary;
 
     const onClick = () => {
       updateTag({ ...tag, active: !active });
