@@ -1,7 +1,18 @@
 import React from 'react'
-import { ConfigProvider, Layout, Menu, Typography } from 'antd'
+import {
+  ConfigProvider,
+  Divider,
+  Layout,
+  Menu,
+  Typography,
+  Space
+} from 'antd'
 // antd icons
 import { AppstoreOutlined, FolderOutlined } from '@ant-design/icons'
+// font awesome icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+
 
 // router
 import {
@@ -14,6 +25,9 @@ import './index.css'
 
 // import theme
 import theme from './theme'
+
+// import layout components
+import Filters from './components/filters'
 
 // import pages
 import CategoriesPage from './pages/categories'
@@ -54,6 +68,9 @@ function App() {
   }
 
   const handleMenuClick = ({ key }) => {
+    if (key === 'filters') {
+      return
+    }
     navigate(key)
   }
 
@@ -62,32 +79,43 @@ function App() {
       label: <Typography.Title level={5}>PM</Typography.Title>,
       key: '/'
     },
-    { label: 'Categories', key: '/categories', icon: <AppstoreOutlined />, children: buildCategoriesMenuItems(categories) },
+    {
+      label: 'Categories', key: '/categories',
+      icon: <AppstoreOutlined />,
+      children: buildCategoriesMenuItems(categories)
+    },
+    {
+      label: <Filters />,
+      key: 'filters',
+    }
   ]
 
   return (
     <ConfigProvider theme={{ ...theme }}>
-        <Layout>
-          <Header style={{ backgroundColor: theme.token.colorBgLayout }}
-          >
-            <Menu
-              theme="dark"
-              mode="horizontal"
-              defaultSelectedKeys={['home']}
-              style={{ backgroundColor: theme.token.colorBgLayout }}
-              items={menuItems}
-              selectedKeys={window.location.pathname}
-              onClick={handleMenuClick}
-            />
-          </Header>
-          <Content style={{ backgroundColor: theme.token.colorPrimaryBg }}
-          >
-            <Routes>
-              <Route path="/categories/:id" element={<CategoryPage />} />
-              <Route path="/" element={<CategoriesPage />} />
-            </Routes>
-          </Content>
-        </Layout>
+      <Layout>
+        <Header
+          style={{
+            backgroundColor: theme.token.colorBgLayout
+          }}
+        >
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={['home']}
+            style={{ backgroundColor: theme.token.colorBgLayout }}
+            items={menuItems}
+            selectedKeys={window.location.pathname}
+            onClick={handleMenuClick}
+          />
+        </Header>
+        <Content style={{ backgroundColor: theme.token.colorPrimaryBg }}
+        >
+          <Routes>
+            <Route path="/categories/:id" element={<CategoryPage />} />
+            <Route path="/" element={<CategoriesPage />} />
+          </Routes>
+        </Content>
+      </Layout>
     </ConfigProvider>
   );
 }

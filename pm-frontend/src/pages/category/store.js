@@ -81,27 +81,76 @@ export const useUnsetTagImagesNames = () => {
 }
 
 // Function to filter tags
-const filterTags = (tags, filters = []) => {
-  // possible filters: all, hidden, featured
-  // if filters empty, return all tags except hidden
-  // if filters.hidden = true, shows hidden tags only
-  // if filters.featured = true, shows featured tags only
-  // if filters.all = true, shows all tags
-  if (filters.all) {
-    return tags;
+// - filters: object
+//   - active: string (all, true, false)
+//   - favorite: string (all, true, false)
+//   - rating: string (all, 1, 2, 3, 4, 5)
+//   - name: string
+//   - labels: array of strings
+// - order_by: string (name_asc, name_desc, rating_asc, rating_desc)
+const filterAndSortTags = (tags, filters = null, order = null) => {
+  // return all tags if no filters or order
+  if (!filters && !order) {
+    return tags
   }
-  if (filters.hidden) {
-    return tags.filter(tag => tag.active === false);
+
+  // filter tags
+  let filteredTags = tags.filter((tag) => {
+    // collect all the filters in an array
+    const filtersArray = [
+      // active filter
+      // allow if tag is active and filter is all or true
+      // or if tag is not active and filter is all or false
+      (filters.active === 'all' || (filters.active === 'true' && tag.active) || (filters.active === 'false' && !tag.active)),
+      // favorite filter
+      // allow if tag is favorite and filter is all or true
+      // or if tag is not favorite and filter is all or false
+      (filters.favorite === 'all' || (filters.favorite === 'true' && tag.featured) || (filters.favorite === 'false' && !tag.featured)),
+      // rating filter
+      // allow if tag rating is equal to filter rating or if filter is all
+      (filters.rating === 'all' || tag.rank === parseInt(filters.rating))
+    ]
+    // return true if all filters are true
+    return filtersArray.every((filter) => filter)
+  })
+
+  // order tags
+  switch (order) {
+    case 'name_asc':
+      filteredTags = filteredTags.sort((a, b) => a.name.localeCompare(b.name))
+      break
+    case 'name_desc':
+      filteredTags = filteredTags.sort((a, b) => b.name.localeCompare(a.name))
+      break
+    case 'rating_asc':
+      filteredTags = filteredTags.sort((a, b) => a.rank - b.rank)
+      break
+    case 'rating_desc':
+      filteredTags = filteredTags.sort((a, b) => b.rank - a.rank)
+      break
+    default:
+      // by default, order by name asc
+      filteredTags = filteredTags.sort((a, b) => a.name.localeCompare(b.name))
   }
-  if (filters.featured) {
-    return tags.filter(tag => tag.featured === true);
-  }
-  return tags.filter(tag => tag.active === true);
+
+  return filteredTags
 };
+
+const initialFiltersState = {
+    active: 'true', // active tags only by default
+    favorite: 'all', // all favorite states shown by default
+    rating: 'all', // all ratings shown by default
+    name: '',
+    labels: [],
+  }
+const initialOrderState = 'name_asc'
 
 // Category tags store
 export const useTagsStore = create((set, get) => ({
+  filters: initialFiltersState,
+  order_by: initialOrderState,
   tags: [],
+  tagsUnsorted: [],
   tagImagesNames: [],
   isLoading: false,
   isLoaded: false,
@@ -122,14 +171,42 @@ export const useTagsStore = create((set, get) => ({
     const tagImagesNames = getUniqueImageNames(tags);
 
     set({
-      tags: filterTags(tags),
+      tagsUnsorted: tags,
+      tags: filterAndSortTags(tags, get().filters, get().order_by),
       tagImagesNames,
       isLoading: false,
       isLoaded: true
     })
   },
+  filterTags: () => {
+    const tags = get().tagsUnsorted
+    const filters = get().filters
+    const order = get().order_by
+    set({ tags: filterAndSortTags(tags, filters, order) })
+  },
+  setFilters: (filters) => {
+    // set filters
+    set({ filters })
+    // filter tags
+    get().filterTags()
+  },
+  setOrderBy: (order_by) => {
+    // set order
+    set({ order_by })
+    // filter tags
+    get().filterTags()
+  },
+  resetFilters: () => {
+    set({ filters: initialFiltersState })
+    get().filterTags()
+  },
+  resetOrderBy: () => {
+    set({ order_by: initialOrderState })
+    get().filterTags()
+  },
   unsetTags: () => set({
     tags: [],
+    tagsUnsorted: [],
     tagImagesNames: [],
     isLoading: false,
     isLoaded: false
@@ -144,13 +221,14 @@ export const useTagsStore = create((set, get) => ({
     if (response.ok) {
       const updatedTag = await response.json()
       set({
-        tags: get().tags.map((tag) => {
+        tagsUnsorted: get().tagsUnsorted.map((tag) => {
           if (tag.id === updatedTag.id) {
             return updatedTag
           }
           return tag
         })
       })
+      get().filterTags()
     }
   },
   deleteTag: async (tag) => {
@@ -161,14 +239,43 @@ export const useTagsStore = create((set, get) => ({
     // If API call is successful, delete the tag in the store
     if (response.ok) {
       set({
-        tags: get().tags.filter((t) => t.id !== tag.id),
+        tagsUnsorted: get().tagsUnsorted.filter((t) => t.id !== tag.id),
       })
+      get().filterTags()
     }
   }
 }))
 
+export const useFilters = () => {
+  return useTagsStore(({ filters }) => filters)
+}
+
+export const useOrder = () => {
+  return useTagsStore(({ order_by }) => order_by)
+}
+
+export const useSetFilters = () => {
+  return useTagsStore(({ setFilters }) => setFilters)
+}
+
+export const useSetOrderBy = () => {
+  return useTagsStore(({ setOrderBy }) => setOrderBy)
+}
+
+export const useResetFilters = () => {
+  return useTagsStore(({ resetFilters }) => resetFilters)
+}
+
+export const useResetOrderBy = () => {
+  return useTagsStore(({ resetOrderBy }) => resetOrderBy)
+}
+
 export const useFetchTags = () => {
   return useTagsStore(({ fetchTags }) => fetchTags)
+}
+
+export const useRefilterTags = () => {
+  return useTagsStore(({ refilterTags }) => refilterTags)
 }
 
 export const useTags = () => {
