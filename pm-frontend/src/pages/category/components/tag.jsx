@@ -2,15 +2,31 @@
 import React, { useMemo, useState } from 'react';
 import { useResponsive } from 'ahooks';
 
-import { Card, Image, Skeleton, Typography, Carousel, Rate, Tooltip } from 'antd';
+import {
+  Card,
+  Image,
+  Skeleton,
+  Typography,
+  Carousel,
+  Rate,
+  Tooltip,
+  Dropdown,
+  Button,
+  Tag as AntTag,
+  Space
+} from 'antd';
 // fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCopy,
-  // favorite icons
   faHeart as faHeartSolid,
-  // hide icon
   faEyeSlash as faEyeSlashSolid,
+  faEllipsisH,
+  faTrash,
+  faCartArrowDown,
+  faTags,
+  faTag,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faHeart as faHeartRegular,
@@ -182,11 +198,81 @@ const Tag = (props) => {
     );
   }
 
+  const SettingsButton = () => {
+    const items = [
+      {
+        key: 'collect',
+        label: (
+          <Button type="text" block size="small" >
+            Collect tag
+          </Button>
+        ),
+        icon: <FontAwesomeIcon icon={faCartArrowDown} />,
+      },
+      {
+        key: 'delete',
+        label: (
+          <Button type="text" block size="small" >
+            Delete tag
+          </Button>
+        ),
+        icon: <FontAwesomeIcon icon={faTrash} />,
+        danger: true,
+      },
+      {
+        key: 'add-tag',
+        label: (
+          <Button type="primary" block size="small" icon={<FontAwesomeIcon icon={faPlus} />} ghost>
+            Add label
+          </Button>
+        ),
+        icon: <FontAwesomeIcon icon={faTags} />,
+      },
+      {
+        key: 'tags',
+        label: (
+          <Space wrap size={[0, 8]} style={{ maxWidth: 150 }}>
+            <AntTag key="tag-1" color="red" closable>
+              anime
+            </AntTag>
+            <AntTag key="tag-2" color="yellow" closable>
+              photorealistic
+            </AntTag>
+            <AntTag key="tag-3" color="blue" closable>
+              unstable
+            </AntTag>
+            <AntTag key="tag-4" color="green" closable>
+              face
+            </AntTag>
+            <AntTag key="tag-5" color="purple" closable>
+              eyes
+            </AntTag>
+          </Space>
+        ),
+      },
+    ];
+
+    return (
+      <Dropdown
+      menu={{items}}
+      placement="right"
+      >
+        <div>
+          <FontAwesomeIcon
+            icon={faEllipsisH}
+            style={{ cursor: 'pointer', color: colorPrimary }}
+          />
+        </div>
+      </Dropdown>
+    );
+  }
+
   // Actions buttons collection
   const actions = [
     <CopyButton />,
     <FavoriteButton />,
     <HideButton />,
+    <SettingsButton />,
   ];
 
   if (!name) {
