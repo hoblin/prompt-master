@@ -54,6 +54,7 @@ const Tag = (props) => {
     id,
     active,
     featured: favorite,
+    matches,
   } = tag;
   const { image_size } = category;
   const updateTag = useUpdateTag();
@@ -71,10 +72,37 @@ const Tag = (props) => {
     }, 3000);
   };
 
+  // function to render name with fuse search matches highlighted
+  const renderName = () => {
+    // if no matches return name
+    if (!matches) {
+      return name;
+    }
+    // split name into array of characters
+    const nameArray = name.split('');
+    // loop through matches and replace characters with highlighted characters
+    matches.forEach((match) => {
+      const { indices } = match;
+      // loop through indices and replace characters
+      indices.forEach((index) => {
+        var [start, end] = index;
+        end += 1;
+        // get characters to replace
+        const characters = nameArray.slice(start, end);
+        // replace characters
+        nameArray.splice(start, end - start, (
+          <span key={`tag-${id}-name-match-${start}-${end}`} style={{ color: colorQuaternary }}>
+            {characters}
+          </span>
+        ));
+      });
+    });
+    return nameArray;
+  };
+
   // Images sliding
   const tagImagesNames = useTagImagesNames();
   const globalIndex = useIndex();
-
 
   // Title level based on columns
   const level = useMemo(() => {
@@ -90,7 +118,7 @@ const Tag = (props) => {
     }
   }, [columns]);
 
-  const title = <Typography.Title level={level}>{name}</Typography.Title>;
+  const title = () => (<Typography.Title level={level}>{renderName()}</Typography.Title>);
 
   // Rating component
   const updateRating = (rating) => {
@@ -287,7 +315,7 @@ const Tag = (props) => {
 
   return (
     <Card
-    title={title}
+    title={title()}
     actions={actions}
     style={{ textAlign: 'center' }}
     >

@@ -1,4 +1,6 @@
 import { create } from 'zustand'
+// fuse search
+import Fuse from 'fuse.js';
 
 // Category store
 export const useCategoryStore = create((set) => ({
@@ -85,7 +87,7 @@ export const useUnsetTagImagesNames = () => {
 //   - active: string (all, true, false)
 //   - favorite: string (all, true, false)
 //   - rating: string (all, 1, 2, 3, 4, 5)
-//   - name: string
+//   - name: string (search string)
 //   - labels: array of strings
 // - order_by: string (name_asc, name_desc, rating_asc, rating_desc)
 const filterAndSortTags = (tags, filters = null, order = null) => {
@@ -131,6 +133,22 @@ const filterAndSortTags = (tags, filters = null, order = null) => {
     default:
       // by default, order by name asc
       filteredTags = filteredTags.sort((a, b) => a.name.localeCompare(b.name))
+  }
+
+  // fuse search
+  if (filters.name) {
+    const fuse = new Fuse(filteredTags, {
+      includeMatches: true,
+      keys: ['name']
+    })
+    const results = fuse.search(filters.name)
+    // add matches to filteredTags with a new key 'matches'
+    filteredTags = results.map((result) => {
+      return {
+        ...result.item,
+        matches: result.matches
+      }
+    })
   }
 
   return filteredTags

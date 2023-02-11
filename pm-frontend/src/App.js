@@ -5,7 +5,8 @@ import {
   Layout,
   Menu,
   Typography,
-  Space
+  Space,
+  Input,
 } from 'antd'
 // antd icons
 import { AppstoreOutlined, FolderOutlined } from '@ant-design/icons'
@@ -28,6 +29,7 @@ import theme from './theme'
 
 // import layout components
 import Filters from './components/filters'
+import Search from './components/search'
 
 // import pages
 import CategoriesPage from './pages/categories'
@@ -95,6 +97,9 @@ function App() {
       <Layout>
         <Header
           style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
             backgroundColor: theme.token.colorBgLayout
           }}
         >
@@ -102,11 +107,15 @@ function App() {
             theme="dark"
             mode="horizontal"
             defaultSelectedKeys={['home']}
-            style={{ backgroundColor: theme.token.colorBgLayout }}
             items={menuItems}
             selectedKeys={window.location.pathname}
             onClick={handleMenuClick}
+            style={{
+              backgroundColor: theme.token.colorBgLayout,
+              width: '100%',
+            }}
           />
+          <Search />
         </Header>
         <Content style={{ backgroundColor: theme.token.colorPrimaryBg }}
         >
