@@ -29,7 +29,7 @@ const Search = () => {
   useEffect(() => {
     setSearching(false);
     setFilters({ ...filters, name: debouncedValue });
-  }, [debouncedValue]);
+  }, [debouncedValue, filters, setFilters]);
 
   return (
     <Input.Search

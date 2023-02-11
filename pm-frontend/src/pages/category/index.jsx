@@ -24,8 +24,6 @@ import {
   useUnsetTags,
   useSetTagImagesNames,
   useSlide,
-  useFilters,
-  useOrder,
 } from './store';
 
 const CategoryPage = (props) => {

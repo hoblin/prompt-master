@@ -1,18 +1,12 @@
 import React from 'react'
 import {
   ConfigProvider,
-  Divider,
   Layout,
   Menu,
   Typography,
-  Space,
-  Input,
 } from 'antd'
 // antd icons
 import { AppstoreOutlined, FolderOutlined } from '@ant-design/icons'
-// font awesome icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 
 // router

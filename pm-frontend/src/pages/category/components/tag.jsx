@@ -25,7 +25,6 @@ import {
   faTrash,
   faCartArrowDown,
   faTags,
-  faTag,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -40,8 +39,6 @@ import { useUpdateTag, useTagImagesNames, useIndex } from '../store';
 import theme from '../../../theme';
 const {
     colorPrimary,
-    colorTextSecondary: colorSecondary,
-    colorTextTertiary: colorTertiary,
     colorTextQuaternary: colorQuaternary,
   } = theme.token;
 
@@ -145,7 +142,7 @@ const Tag = (props) => {
         </swiper-slide>
       )
     });
-  }, [tagImagesNames, tagImages, imageSize, id]);
+  }, [tagImagesNames, tagImages, imageSize, id, columns]);
 
   const previewGroup = useMemo(() => {
     // disable preview group for mobile devices
