@@ -1,5 +1,10 @@
 // Category page with category card and tags list virtualized
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import { useParams } from 'react-router-dom';
 import { useResponsive, useUnmount } from 'ahooks';
 import { FixedSizeList as VList } from 'react-window';
@@ -31,6 +36,8 @@ import {
 } from './store';
 
 const CategoryPage = (props) => {
+  // VList size state
+  const [vListSize, setVListSize] = useState(0);
   const tagBlockExtraHeight = 65 + 95 + 49 + 16; // header + (body - image size) + actions + margin
   const fetchCategory = useFetchCategory();
   const category = useCategory();
@@ -88,6 +95,22 @@ const CategoryPage = (props) => {
     const height = window.innerHeight - header.offsetHeight;
     return height;
   }
+
+  // Set VList size on mount
+  useEffect(() => {
+    setVListSize(screenHeight());
+  }, []);
+
+  // Set VList size on resize
+  useEffect(() => {
+    const resizeHandler = () => {
+      setVListSize(screenHeight());
+    }
+    window.addEventListener('resize', resizeHandler);
+    return () => {
+      window.removeEventListener('resize', resizeHandler);
+    }
+  }, []);
 
   // function to break tags into arrays
   const tagsChunks = useMemo(() => {
