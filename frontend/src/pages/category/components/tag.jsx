@@ -297,7 +297,7 @@ const Tag = (props) => {
     <CopyButton />,
     <FavoriteButton />,
     <HideButton />,
-    <SettingsButton />,
+    // <SettingsButton />,
   ];
 
   if (!name) {
