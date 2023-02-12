@@ -1,0 +1,54 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://127.0.0.1:8080",
+  "scripts": {
+    "start": "craco start",
+    "build": "BUILD_PATH='../public' craco build",
+    "test": "craco test",
+    "eject": "craco eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@craco/craco": "^6.4.5",
+    "@welldone-software/why-did-you-render": "^7.0.1"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-regular-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "ahooks": "^3.7.4",
+    "antd": "^5.1.7",
+    "craco-antd": "^2.0.0",
+    "fuse.js": "^6.6.2",
+    "react": "^18.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-dom": "^18.2.0",
+    "react-fontawesome": "^1.7.1",
+    "react-router-dom": "^6.8.0",
+    "react-scripts": "^5.0.1",
+    "react-window": "^1.8.8",
+    "swiper": "^9.0.2",
+    "web-vitals": "^3.1.1",
+    "zustand": "^4.3.2"
+  }
+}

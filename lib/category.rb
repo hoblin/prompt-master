@@ -36,6 +36,14 @@ class Category < ActiveRecord::Base
     all.find { |category| category.name == name.to_s }
   end
 
+  def image
+    tags.active.order('rank DESC').first&.cover&.url
+  end
+
+  def image_size
+    tags.first&.image_size
+  end
+
   def path
     "#{BASE_PATH}/#{name}"
   end

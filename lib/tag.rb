@@ -24,6 +24,38 @@ class Tag < ActiveRecord::Base
       .map { |image| Image.new(image, self) }
   end
 
+  def cover
+    images.first
+  end
+
+  def image_size
+    # Get image size from first image file
+    return nil if cover.nil?
+    FastImage.size(cover.path)
+  end
+
+  def as_json
+    {
+      id: id,
+      name: name,
+      category_id: category_id,
+      images: images.map do |image|
+        {
+          name: image.name,
+          url: image.url
+        }
+      end,
+      rank: rank,
+      active: active,
+      featured: featured,
+      image_size: image_size
+    }
+  end
+
+  def to_json
+    as_json.to_json
+  end
+
   def path
     "./inspiration/#{category.name}/#{name}"
   end
