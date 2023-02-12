@@ -117,7 +117,7 @@ const CategoryPage = (props) => {
         height={screenHeight()}
         itemCount={tagsChunks.length}
         itemSize={tagHeight()}
-        overscanCount={1}
+        overscanCount={2}
       >
         {renderRow}
       </VList>
