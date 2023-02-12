@@ -1,4 +1,4 @@
-// Craco config file for pm-frontend
+// Craco config file for frontend
 module.exports = {
   // Style and CSS config with SASS
   style: {

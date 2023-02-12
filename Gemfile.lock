@@ -24,10 +24,6 @@ GEM
     erubi (1.12.0)
     fastimage (2.2.6)
     foreman (0.87.2)
-    haml (6.1.1)
-      temple (>= 0.8.2)
-      thor
-      tilt
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     json (2.6.3)
@@ -51,7 +47,6 @@ GEM
     rack-unreloader (2.1.0)
     rainbow (3.1.1)
     rake (13.0.6)
-    redcarpet (3.6.0)
     regexp_parser (2.6.2)
     rexml (3.2.5)
     rubocop (1.42.0)
@@ -85,13 +80,10 @@ GEM
       language_server-protocol (~> 3.17.0.2)
       rubocop (= 1.42.0)
       rubocop-performance (= 1.15.2)
-    temple (0.10.0)
-    thor (1.2.1)
     tilt (2.0.11)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
-    will_paginate (3.3.1)
 
 PLATFORMS
   x86_64-darwin-21
@@ -104,18 +96,15 @@ DEPENDENCIES
   binding_of_caller (~> 1.0)
   fastimage (~> 2.2)
   foreman (~> 0.87.2)
-  haml (~> 6.1)
   pry (~> 0.14.1)
   puma (~> 6.0)
   rack (~> 2.2.6)
   rack-unreloader (~> 2.0)
   rake (~> 13.0)
-  redcarpet (~> 3.5)
   sinatra (~> 3.0)
   sinatra-activerecord (~> 2.0.26)
   sqlite3 (~> 1.6)
   standard (~> 1.20)
-  will_paginate (~> 3.3)
 
 BUNDLED WITH
    2.4.3

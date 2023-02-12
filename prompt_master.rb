@@ -8,18 +8,15 @@ Dir[File.dirname(__FILE__) + "/lib/*.rb"].each { |file| require file }
 # Sinatra base
 class PromptMaster < Sinatra::Base
   register Sinatra::ActiveRecordExtension
-  include WillPaginate::Sinatra::Helpers
-
-  PAGINATION_LIMIT = 80
 
   # set root
   set :root, File.dirname(__FILE__)
 
-  # set views
-  set :views, proc { File.join(root, "views") }
-
   # set public folder
   set :public_folder, proc { File.join(root, "public") }
+
+  # set views
+  set :views, proc { File.join(root, "views") }
 
   # use better errors
   configure :development do
@@ -28,99 +25,18 @@ class PromptMaster < Sinatra::Base
   end
 
   helpers do
-    # render partials
-    def partial(template, locals = {})
-      haml(template, layout: false, locals: locals)
-    end
-
     # access app secrets from ./secrets.yml
     def secret(key)
       @secrets ||= YAML.load_file(File.join(__dir__, "secrets.yml"))
       @secrets[key] || ENV[key] || ""
     end
-
-    # generate URL for category with optional filter and sorting
-    def category_url(category_id, filter: nil, sort: nil)
-      url = "/category/#{category_id}/"
-      url += filter.to_s if filter
-      url += "?sort=#{sort}" if sort
-      url
-    end
-
-    # include javascript file with cache busting
-    def javascript_include_tag(file)
-      base_path = File.join(__dir__, "public", "javascripts")
-      file = file + ".js" unless file.end_with?(".js")
-      hash = Digest::MD5.hexdigest(File.read(File.join(base_path, file)))
-      "<script src=\"/javascripts/#{file}?#{hash}\"></script>"
-    end
-
-    # include stylesheet file with cache busting
-    def stylesheet_link_tag(file)
-      base_path = File.join(__dir__, "public", "stylesheets")
-      file = file + ".css" unless file.end_with?(".css")
-      hash = Digest::MD5.hexdigest(File.read(File.join(base_path, file)))
-      "<link rel=\"stylesheet\" href=\"/stylesheets/#{file}?#{hash}\">"
-    end
   end
-
-  # will_paginate config
-  require "will_paginate"
-  require "will_paginate/active_record"
-  WillPaginate.per_page = PAGINATION_LIMIT
 
   # set port
   set :port, 8080
 
   error do
     erb :"500"
-  end
-
-  # root route with optional filter featured|hidden
-  get "/:filter?" do
-    @categories = case params[:filter]
-    when "featured"
-      Category.featured
-    when "hidden"
-      Category.hidden
-    else
-      Category.all
-    end
-
-    haml :index, escape_html: false
-  end
-
-  # render index.erb with selected category
-  get "/category/:id/:filter?" do
-    @category = Category.find_by_id(params[:id])
-    # redirect to root if category not found
-    redirect "/" if @category.nil?
-
-    # sorting statement
-    @sort = case params[:sort]
-    when "rank-asc"
-      "rank ASC"
-    when "rank-desc"
-      "rank DESC"
-    when "name-asc"
-       Arel.sql "LOWER(name) ASC"
-    when "name-desc"
-       Arel.sql "LOWER(name) DESC"
-    else
-       Arel.sql "LOWER(name) ASC"
-    end
-
-    # paginate tags array with kaminari of the selected category
-    @tags = case params[:filter]
-    when "featured"
-      @category.tags.featured
-    when "hidden"
-      @category.tags.hidden
-    else
-      @category.tags.active
-    end.reorder(@sort).page(params[:page])
-
-    haml :index, escape_html: false
   end
 
   # delete category
@@ -290,5 +206,10 @@ class PromptMaster < Sinatra::Base
 
     # respond with updated tag
     @tag.to_json
+  end
+
+  # root route responds with index.html from public folder
+  get "/*" do
+    send_file File.join(settings.public_folder, "index.html")
   end
 end
