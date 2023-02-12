@@ -4,10 +4,10 @@ import {
   Layout,
   Menu,
   Typography,
+  Divider
 } from 'antd'
 // antd icons
 import { AppstoreOutlined, FolderOutlined } from '@ant-design/icons'
-
 
 // router
 import {
@@ -24,6 +24,7 @@ import theme from './theme'
 // import layout components
 import Filters from './components/filters'
 import Search from './components/search'
+import WildCardBuilder from './components/wildcard-builder'
 
 // import pages
 import CategoriesPage from './pages/categories'
@@ -109,6 +110,8 @@ function App() {
               width: '100%',
             }}
           />
+          <WildCardBuilder />
+          <Divider type="vertical" />
           <Search />
         </Header>
         <Content style={{ backgroundColor: theme.token.colorPrimaryBg }}
