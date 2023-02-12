@@ -1,12 +1,16 @@
 // Category page with category card and tags list virtualized
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useResponsive, useUnmount } from 'ahooks';
 import { FixedSizeList as VList } from 'react-window';
 import { Row, Col, FloatButton } from 'antd';
 // FontAwesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronLeft,
+  faChevronRight,
+  faChevronUp
+} from '@fortawesome/free-solid-svg-icons';
 
 import { getImageSize, getColumns } from '../../utils';
 
@@ -35,6 +39,8 @@ const CategoryPage = (props) => {
   const tags = useTags();
   const { tagImagesNames } = useTagsStates();
   const { slideLeft, slideRight } = useSlide();
+
+  const vListRef = useRef(null);
 
   const { id } = useParams();
 
@@ -109,6 +115,10 @@ const CategoryPage = (props) => {
     );
   }
 
+  const scrottTop = () => {
+    vListRef.current.scrollTo(0);
+  }
+
   return (
     <>
       {/* <Category category={category} isLoading={isCategoryLoading} key={`category-${id}`} /> */}
@@ -118,13 +128,17 @@ const CategoryPage = (props) => {
         itemCount={tagsChunks.length}
         itemSize={tagHeight()}
         overscanCount={2}
+        ref={vListRef}
       >
         {renderRow}
       </VList>
-      {/* <FloatButton.Group>
-        <FloatButton type="primary" icon={<FontAwesomeIcon icon={faSearch} />} />
-        <FloatButton type="primary" icon={<FontAwesomeIcon icon={faChevronUp} />} />
-      </FloatButton.Group> */}
+      <FloatButton.Group>
+        <FloatButton
+        type="primary"
+        icon={<FontAwesomeIcon icon={faChevronUp} />}
+        onClick={scrottTop}
+        />
+      </FloatButton.Group>
       {/* Global Slider buttons on the left */}
       <FloatButton
       type="primary"
