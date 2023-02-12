@@ -3,6 +3,8 @@ set -e
 # set env
 export RACK_ENV=production
 # update repo
+git reset --hard
+git checkout main
 git pull origin main --ff-only
 # copy secrets file if not exists
 cp -n /app/secrets.yml.example /app/secrets.yml
