@@ -13,7 +13,8 @@ import {
   Dropdown,
   Button,
   Tag as AntTag,
-  Space
+  Space,
+  Popconfirm
 } from 'antd';
 // fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -33,7 +34,12 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 
 import { getImageSize, getColumns } from '../../../utils';
-import { useUpdateTag, useTagImagesNames, useIndex } from '../store';
+import {
+  useUpdateTag,
+  useDeleteTag,
+  useTagImagesNames,
+  useIndex
+} from '../store';
 
 // theme
 import theme from '../../../theme';
@@ -55,6 +61,7 @@ const Tag = (props) => {
   } = tag;
   const { image_size } = category;
   const updateTag = useUpdateTag();
+  const deleteTag = useDeleteTag();
   const breakpoints = useResponsive();
   const columns = useMemo(() => getColumns(breakpoints), [breakpoints]);
   const imageSize = useMemo(() => getImageSize(image_size, columns), [image_size, columns]);
@@ -120,6 +127,10 @@ const Tag = (props) => {
   // Rating component
   const updateRating = (rating) => {
     updateTag({ ...tag, rank: rating });
+  };
+
+  const deleteTagHandler = () => {
+    deleteTag({ id });
   };
 
   // Images components for carousel built from global images names
@@ -225,56 +236,68 @@ const Tag = (props) => {
 
   const SettingsButton = () => {
     const items = [
-      {
-        key: 'collect',
-        label: (
-          <Button type="text" block size="small" >
-            Collect tag
-          </Button>
-        ),
-        icon: <FontAwesomeIcon icon={faCartArrowDown} />,
-      },
+      // {
+      //   key: 'collect',
+      //   label: (
+      //     <Button type="text" block size="small" >
+      //       Collect tag
+      //     </Button>
+      //   ),
+      //   icon: <FontAwesomeIcon icon={faCartArrowDown} />,
+      // },
       {
         key: 'delete',
         label: (
-          <Button type="text" block size="small" >
-            Delete tag
-          </Button>
+          <Popconfirm
+            title="Are you sure you want to delete this tag?"
+            description="All tag images would be deleted. This action cannot be undone."
+            onConfirm={deleteTagHandler}
+            okText="Delete"
+            cancelText="Cancel"
+            >
+            <Button
+            type="text"
+            block
+            size="small"
+            >
+              Delete tag
+            </Button>
+          </Popconfirm>
         ),
         icon: <FontAwesomeIcon icon={faTrash} />,
         danger: true,
       },
-      {
-        key: 'add-tag',
-        label: (
-          <Button type="primary" block size="small" icon={<FontAwesomeIcon icon={faPlus} />} ghost>
-            Add label
-          </Button>
-        ),
-        icon: <FontAwesomeIcon icon={faTags} />,
-      },
-      {
-        key: 'tags',
-        label: (
-          <Space wrap size={[0, 8]} style={{ maxWidth: 150 }}>
-            <AntTag key="tag-1" color="red" closable>
-              anime
-            </AntTag>
-            <AntTag key="tag-2" color="yellow" closable>
-              photorealistic
-            </AntTag>
-            <AntTag key="tag-3" color="blue" closable>
-              unstable
-            </AntTag>
-            <AntTag key="tag-4" color="green" closable>
-              face
-            </AntTag>
-            <AntTag key="tag-5" color="purple" closable>
-              eyes
-            </AntTag>
-          </Space>
-        ),
-      },
+      // {
+      //   key: 'add-tag',
+      //   label: (
+      //     <Button type="primary" block size="small" icon={<FontAwesomeIcon icon={faPlus} />} ghost>
+      //       Add label
+      //     </Button>
+      //   ),
+      //   icon: <FontAwesomeIcon icon={faTags} />,
+      // },
+      // {
+      //   key: 'tags',
+      //   label: (
+      //     <Space wrap size={[0, 8]} style={{ maxWidth: 150 }}>
+      //       <AntTag key="tag-1" color="red" closable>
+      //         anime
+      //       </AntTag>
+      //       <AntTag key="tag-2" color="yellow" closable>
+      //         photorealistic
+      //       </AntTag>
+      //       <AntTag key="tag-3" color="blue" closable>
+      //         unstable
+      //       </AntTag>
+      //       <AntTag key="tag-4" color="green" closable>
+      //         face
+      //       </AntTag>
+      //       <AntTag key="tag-5" color="purple" closable>
+      //         eyes
+      //       </AntTag>
+      //     </Space>
+      //   ),
+      // },
     ];
 
     return (
@@ -297,7 +320,7 @@ const Tag = (props) => {
     <CopyButton />,
     <FavoriteButton />,
     <HideButton />,
-    // <SettingsButton />,
+    <SettingsButton />,
   ];
 
   if (!name) {

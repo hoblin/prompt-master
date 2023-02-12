@@ -117,19 +117,6 @@ class PromptMaster < Sinatra::Base
     {success: true}.to_json
   end
 
-  # delete tag from database and all associated images from disk
-  delete "/tag/:id" do
-    content_type :json
-
-    @tag = Tag.find_by_id(params[:id])
-    # respond with error if tag not found
-    return {success: false, error: "Tag not found"}.to_json if @tag.nil?
-
-    # delete tag
-    @tag.destroy
-    {success: true}.to_json
-  end
-
   # serve static files from inspiration folder
   get "/inspiration/*" do
     send_file "./inspiration/#{params[:splat].first}"
@@ -145,7 +132,7 @@ class PromptMaster < Sinatra::Base
     content_type :json
 
     # Get all categories with first tag avoiding N+1 queries
-    Category.includes(:tags).map do |category|
+    Category.includes(:tags).reorder('name ASC').map do |category|
       {
         id: category.id,
         name: category.name,
@@ -206,6 +193,19 @@ class PromptMaster < Sinatra::Base
 
     # respond with updated tag
     @tag.to_json
+  end
+
+    # delete tag from database and all associated images from disk
+  delete "/api/tag/:id" do
+    content_type :json
+
+    @tag = Tag.find_by_id(params[:id])
+    # respond with error if tag not found
+    return {success: false, error: "Tag not found"}.to_json if @tag.nil?
+
+    # delete tag
+    @tag.destroy
+    {success: true}.to_json
   end
 
   # root route responds with index.html from public folder
