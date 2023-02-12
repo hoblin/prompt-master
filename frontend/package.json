@@ -5,7 +5,7 @@
   "proxy": "http://127.0.0.1:8080",
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "BUILD_PATH='../public' craco build",
     "test": "craco test",
     "eject": "craco eject"
   },
