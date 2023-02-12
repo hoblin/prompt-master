@@ -1,5 +1,5 @@
 .DS_STORE
 tmp/*
-inspiration/*
+inspiration
 *.sqlite3
 secrets.yml
