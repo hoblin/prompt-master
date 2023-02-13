@@ -14,7 +14,7 @@ Please note that the below instructions were written to work on Windows OS and y
 ### Prerequisites
 
 - Git SCM for Windows: https://gitforwindows.org/
-- Docker Desktop: https://www.docker.com/products/docker-desktop/
+- Docker Desktop: https://www.docker.com/products/docker-desktop/ **Use WSL version. There were issues reported with Hyper-V**
 - AUTOMATIC1111/stable-diffusion-webui: https://github.com/AUTOMATIC1111/stable-diffusion-webui
 - Extension for webui yfszzx/stable-diffusion-webui-inspiration: https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Extensions#inspiration
 
@@ -31,7 +31,7 @@ docker compose up
 ### Steps explanation
 
 1. [Install Git SCM](https://gitforwindows.org/) for Windows.
-2. [Install Docker Desktop](https://www.docker.com/products/docker-desktop/).
+2. [Install Docker Desktop](https://www.docker.com/products/docker-desktop/). **Use WSL version. There were issues reported with Hyper-V**
 3. Follow [the instructions](https://github.com/yfszzx/stable-diffusion-webui-inspiration#using-txt2img-inspiration) in the yfszzx/stable-diffusion-webui-inspiration repository to generate previews for the words in the prompts.
 4. Open Git Bash and set `git config --global core.autocrlf input` to solve the problem with line endings on Windows.
 5. `cd` to the extension directory: `cd C:/stable-diffusion-webui/extensions/stable-diffusion-webui-inspiration/`
