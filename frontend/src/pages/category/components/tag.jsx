@@ -32,6 +32,7 @@ import {
   faHeart as faHeartRegular,
   faEyeSlash as faEyeSlashRegular,
 } from '@fortawesome/free-regular-svg-icons';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import { getImageSize, getColumns } from '../../../utils';
 import {
@@ -69,7 +70,6 @@ const Tag = (props) => {
   // copy tag name to clipboard
   const [copied, setCopied] = useState(false);
   const copyHandler = () => {
-    navigator.clipboard.writeText(name);
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
@@ -181,15 +181,16 @@ const Tag = (props) => {
   }, [tagImages, id, previewVisible, columns]);
 
   const CopyButton = () => (
-    <Tooltip title={copied ? 'Copied' : 'Copy'} placement="bottom">
-      <div>
-        <FontAwesomeIcon
-          icon={faCopy}
-          onClick={copyHandler}
-          style={{ cursor: 'pointer', color: colorPrimary }}
-        />
-      </div>
-    </Tooltip>
+    <CopyToClipboard text={name} onCopy={copyHandler}>
+      <Tooltip title={copied ? 'Copied' : 'Copy'} placement="bottom">
+        <div>
+          <FontAwesomeIcon
+            icon={faCopy}
+            style={{ cursor: 'pointer', color: colorPrimary }}
+          />
+        </div>
+      </Tooltip>
+    </CopyToClipboard>
   );
 
   const FavoriteButton = () => {
