@@ -25,7 +25,7 @@ git config --global core.autocrlf input
 cd C:/stable-diffusion-webui/extensions/stable-diffusion-webui-inspiration/
 git clone https://github.com/hoblin/prompt-master.git
 cd prompt-master
-docker compose up -d
+docker compose up
 ```
 
 ### Steps explanation
@@ -37,7 +37,7 @@ docker compose up -d
 5. `cd` to the extension directory: `cd C:/stable-diffusion-webui/extensions/stable-diffusion-webui-inspiration/`
 6. Clone the repository: `git clone https://github.com/hoblin/prompt-master.git`
 7. `cd` into the cloned repository: `cd prompt-master`
-8. Build and run the Docker container: `docker compose up -d`
+8. Build and run the Docker container: `docker compose up`
 9. Once the Docker container is built, you can use the Docker Desktop app to start, stop, and restart the app.
 10. On each start, the app updates to the latest version from Github and scans the inspiration extension directory for new tags previews. To add a new set, generate it in the "inspiration" extension of WebUI and restart the Prompt Master container.
 
