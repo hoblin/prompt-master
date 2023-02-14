@@ -1,7 +1,6 @@
 # Prompt Master
 
-<img width="1419" alt="image" src="https://user-images.githubusercontent.com/28090/212198802-b55e85b3-58f7-499f-a14b-5e7530a22c78.png">
-
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/28090/218661549-b53bdac7-28f4-466c-b538-f8c7b36c90f7.png">
 
 ## Introduction
 
