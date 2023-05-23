@@ -49,17 +49,19 @@ class Utilities
         last_filename += 1
         # iterate source tags and copy images to destination tags
         source_tags.each do |source_tag|
-          # create destination tag directory if not exists
           destination_tag = "./inspiration/#{category}/#{source_tag}"
-          FileUtils.mkdir_p(destination_tag) unless File.directory?(destination_tag)
-          # copy image to destination tag kmeeping \d{3} with leading zeros
           destination_file = "#{destination_tag}/#{last_filename.to_s.rjust(3, "0")}.jpg"
-          FileUtils.cp("./inspiration/#{SYSTEM_FOLDER}/#{category}/#{source_tag}/#{source_file}", destination_file)
-          # remove source image
           source_file_path = "./inspiration/#{SYSTEM_FOLDER}/#{category}/#{source_tag}/#{source_file}"
+          source_tag_path = "./inspiration/#{SYSTEM_FOLDER}/#{category}/#{source_tag}"
+
+          next unless File.exist?(source_file_path)
+          # create destination tag directory if not exists
+          FileUtils.mkdir_p(destination_tag) unless File.directory?(destination_tag)
+          # copy image to destination tag keeping \d{3} with leading zeros
+          FileUtils.cp(source_file_path, destination_file)
+          # remove source image
           FileUtils.rm(source_file_path)
           # remove source tag directory if empty
-          source_tag_path = "./inspiration/#{SYSTEM_FOLDER}/#{category}/#{source_tag}"
           FileUtils.rm_rf(source_tag_path) if Dir["#{source_tag_path}/*"].empty?
         end
         # remove source category directory if empty
