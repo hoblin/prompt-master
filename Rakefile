@@ -1,34 +1,30 @@
+# Rakefile
+
+require 'rake'
+require 'sequel'
+
 require "sinatra/activerecord"
 require "sinatra/activerecord/rake"
-namespace :app do
-  task :load_config do
-    require "./prompt_master"
-  end
+namespace :db do
+  desc "Transfer data from SQLite to PostgreSQL"
+  task :migrate_to_postgres do
+    # Connect to your SQLite and PostgreSQL databases
+    sqlite_db = Sequel.sqlite('./db/prompt-master.sqlite3')
+    pg_db = Sequel.postgres('prompt-master', user: 'postgres', password: 'postgres', host: 'db')
 
-  desc "Sync database with images in inspiration folder"
-  task sync: :load_config do
-    # require classes recursively
-    Dir[File.dirname(__FILE__) + "/lib/*.rb"].each { |file| require file }
-    # create or initialize categories from folders in inspiration folder
-    Category.from_directory.each do |category|
-      category.save!
-      logger.info "\tCategory synced: #{category.name}"
+    # Exclude the 'schema_migrations' table
+    tables_to_migrate = sqlite_db.tables - %i[schema_migrations ar_internal_metadata]
 
-      # create or initialize tags from folders in category folder
-      category.tags_from_directory.each do |tag|
-        tag.save!
+    # Go through each table in the SQLite database
+    tables_to_migrate.each do |table|
+      # Copy the data
+      sqlite_db[table].each do |row|
+        pg_db[table].insert(row)
       end
     end
-  end
-
-  desc "Merge images from ./inspiration/system/category to ./inspiration/category"
-  task merge: :load_config do
-    # require classes recursively
-    Dir[File.dirname(__FILE__) + "/lib/*.rb"].each { |file| require file }
-    Utilities.merge_images
-  end
-
-  def logger
-    @logger ||= Logger.new($stdout)
+    # Fix after migration from sqlite to postgres
+    %w[categories tags images].each do |table|
+      ActiveRecord::Base.connection.reset_pk_sequence!(table)
+    end
   end
 end

@@ -4,6 +4,7 @@ require "active_support/core_ext/string/inflections"
 # Image is a file in the tag folder
 class Tag < ActiveRecord::Base
   belongs_to :category
+  has_many :images, dependent: :destroy
 
   validates :name, presence: true
 
@@ -14,14 +15,12 @@ class Tag < ActiveRecord::Base
   # delete all images in tag folder when tag is deleted
   before_destroy :delete_images
 
-  def images
-    # return empty array if path doesn't exist
-    return [] unless Dir.exist?(path)
-    @images ||= Dir.entries(path)
+  def sync_images
+    Dir.entries(path)
       .select { |f| File.file? File.join(path, f) }
       .reject { |f| !f.end_with?(".jpg") }
       .sort
-      .map { |image| Image.new(image, self) }
+      .map { |name| images.find_or_create_by(name: name) }
   end
 
   def cover
@@ -70,5 +69,10 @@ class Tag < ActiveRecord::Base
 
   def tag_name
     name.parameterize
+  end
+
+  # check if directory still exists and delete record if not
+  def check_directory
+    destroy unless Dir.exist?(path)
   end
 end

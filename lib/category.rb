@@ -20,7 +20,7 @@ class Category < ActiveRecord::Base
       .select { |f| File.directory? File.join(path, f) }
       .reject { |f| f == "." || f == ".." }
       .sort
-      .map { |tag| Tag.find_or_initialize_by(name: tag, category_id: id) }
+      .map { |tag| Tag.find_or_create_by(name: tag, category_id: id) }
   end
 
   def self.from_directory
@@ -29,15 +29,11 @@ class Category < ActiveRecord::Base
       .reject { |f| f == "." || f == ".." }
       .reject { |f| f == "system" }
       .sort
-      .map { |category| Category.find_or_initialize_by(name: category) }
-  end
-
-  def self.find(name)
-    all.find { |category| category.name == name.to_s }
+      .map { |category| Category.find_or_create_by(name: category) }
   end
 
   def image
-    tags.active.order('rank DESC').first&.cover&.url
+    tags.active.order("rank DESC").first&.cover&.url
   end
 
   def image_size
@@ -50,5 +46,13 @@ class Category < ActiveRecord::Base
 
   def delete_category
     FileUtils.rm_rf(path)
+  end
+
+  # check if directory still exists and delete record if not
+  def check_directory
+    unless Dir.exist?(path)
+      AppLogger.log.info "Category #{name} directory not found. Deleting category."
+      destroy
+    end
   end
 end

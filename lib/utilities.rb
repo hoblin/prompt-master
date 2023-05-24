@@ -2,18 +2,35 @@
 class Utilities
   SYSTEM_FOLDER = "system"
 
+  def self.cleanup_db
+    # delete categories without folders
+    logger.info "Cleaning up categories..."
+    Category.all.each(&:check_directory)
+    # delete tags without folders
+    logger.info "Cleaning up tags..."
+    Tag.find_each(&:check_directory)
+    # delete images without files
+    logger.info "Cleaning up images..."
+    Image.find_each(&:check_file)
+    logger.info "Cleanup complete."
+  end
+
   # Sync DB with ./inspiration folder
   def self.sync_db
+    # sync categories
+    logger.info "Syncing categories..."
     # create or initialize categories from folders in inspiration folder
     Category.from_directory.each do |category|
-      category.save!
-      logger.info "\tCategory synced: #{category.name}"
+      logger.info "\tSyncing category: #{category.name}"
+      logger.info "\t\tCategory synced: #{category.name}. Syncing tags..."
 
       # create or initialize tags from folders in category folder
       category.tags_from_directory.each do |tag|
-        tag.save!
+        tag.sync_images
       end
+      logger.info "\t\tTags synced."
     end
+    logger.info "Categories synced."
   end
 
   # Merge images from ./inspiration/system/category to ./inspiration/category
@@ -25,11 +42,16 @@ class Utilities
       logger.info "No categories to merge"
       return
     end
+    logger.info "Merging categories..."
     # collect categories names to merge
     categories = system_categories.map { |category| category.split("/").last }
     categories.each do |category|
+      # delete preview file if exists at ./inspiration/#{SYSTEM_FOLDER}/category/000.jpg
+      preview_file = "./inspiration/#{SYSTEM_FOLDER}/#{category}/000.jpg"
+      FileUtils.rm(preview_file) if File.exist?(preview_file)
       # skip if category name is system
       next if category == SYSTEM_FOLDER
+      logger.info "\tMerging category: #{category}"
       # find available \d{3} filenames in destination folder
       last_filename = Dir["./inspiration/#{category}/**/*"]
         .map { |file| file.split("/").last }.uniq
@@ -68,7 +90,9 @@ class Utilities
         source_category_path = "./inspiration/#{SYSTEM_FOLDER}/#{category}"
         FileUtils.rm_rf(source_category_path) if Dir["#{source_category_path}/*"].empty?
       end
+      logger.info "\tCategory merged."
     end
+    logger.info "Categories merged."
   end
 
   def self.logger

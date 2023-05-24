@@ -8,14 +8,14 @@ environment ENV.fetch("RACK_ENV") { "development" }
 
 # Specifies the `workers` that Puma will use to serve requests; default is 0.
 #
-workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+workers ENV.fetch("WEB_CONCURRENCY", 2)
 
 # Specifies the `threads` count, if using `workers` > 1; default is 5.
-threads ENV.fetch("RAILS_MAX_THREADS") { 5 }, ENV.fetch("RAILS_MAX_THREADS") { 5 }
+threads ENV.fetch("RAILS_MAX_THREADS", 5), ENV.fetch("RAILS_MAX_THREADS", 5)
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
-port ENV.fetch("PORT") { 8080 }
+port ENV.fetch("PORT", 8080)
 
 # Specifies the `pidfile` that Puma will use.
 # pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }

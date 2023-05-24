@@ -4,10 +4,12 @@ FROM ruby:3.2.0
 ADD . /app
 
 WORKDIR /app
+
+# Add the wait-for-it script
+RUN chmod +x ./wait-for-it.sh
+
 # Install production gems
 RUN bundle install --without development test
-# Create and migrate DB
-RUN rake db:create db:migrate
 
 # Expose 8080 port
 EXPOSE 8080

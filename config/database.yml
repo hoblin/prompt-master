@@ -2,5 +2,10 @@ development:
   adapter: "sqlite3"
   database: "db/prompt-master.sqlite3"
 production:
-  adapter: "sqlite3"
-  database: "db/prompt-master.sqlite3"
+  adapter: "postgresql"
+  encoding: "unicode"
+  database: "prompt-master"
+  username: "postgres"
+  password: "postgres"
+  host: "db"
+  pool: 10

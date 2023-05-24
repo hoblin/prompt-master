@@ -11,9 +11,21 @@ bundle install --without development test
 # migrate database
 rake db:create
 rake db:migrate
-# merge files
-rake app:merge
-# sync app
-rake app:sync
+
+
+# migration from SQLite to PostgreSQL
+if [ -f "./db/prompt-master.sqlite3" ]; then
+  echo "SQLite database found. Migrating to PostgreSQL..."
+  rake db:migrate_to_postgres
+  if [ $? -eq 0 ]; then
+    echo "Migration completed successfully. Backing up SQLite database..."
+    mv ./db/prompt-master.sqlite3 ./db/prompt-master.sqlite3.bak
+    echo "Backup successful. SQLite database backed up as prompt-master.sqlite3.bak."
+  else
+    echo "Migration failed. SQLite database is unchanged."
+  fi
+else
+  echo "No SQLite database found. Skipping migration."
+fi
 
 exec "$@"
