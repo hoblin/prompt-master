@@ -122,7 +122,7 @@ const Tag = (props) => {
     }
   }, [columns]);
 
-  const title = () => (<Typography.Title level={level}>{renderName()}</Typography.Title>);
+  const title = () => (<Tooltip title={name} placement="bottom"><Typography.Title level={level}>{renderName()}</Typography.Title></Tooltip>);
 
   // Rating component
   const updateRating = (rating) => {

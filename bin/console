@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 
-# require sinatra app and start pry console
+# Set environment variable for Sinatra
+ENV['RACK_ENV'] = 'production'
+
+# Require sinatra app and start pry console
 require_relative '../prompt_master'
 require 'pry'
 Pry.start

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # Require all gems in Gemfile
-require "bundler"
+require "bundler/setup"
 Bundler.require
 # require classes recursively
 Dir[File.dirname(__FILE__) + "/lib/*.rb"].each { |file| require file }
@@ -8,6 +8,7 @@ Dir[File.dirname(__FILE__) + "/lib/*.rb"].each { |file| require file }
 # Sinatra base
 class PromptMaster < Sinatra::Base
   register Sinatra::ActiveRecordExtension
+  ActiveSupport::Deprecation.silenced = true
 
   # set root
   set :root, File.dirname(__FILE__)
@@ -38,6 +39,22 @@ class PromptMaster < Sinatra::Base
   error do
     erb :"500"
   end
+
+  scheduler = Rufus::Scheduler.new
+
+  # sync everything afret start
+  scheduler.in "1s" do
+    Utilities.merge_images
+    Utilities.cleanup_db
+  end
+
+  scheduler.in "3s" do
+    Utilities.sync_db
+  end
+
+  #----------------#
+  #   API ROUTES   #
+  #----------------#
 
   # delete category
   delete "/category/:id" do
@@ -132,7 +149,7 @@ class PromptMaster < Sinatra::Base
     content_type :json
 
     # Get all categories with first tag avoiding N+1 queries
-    Category.includes(:tags).reorder('name ASC').map do |category|
+    Category.includes(:tags).reorder("name ASC").map do |category|
       {
         id: category.id,
         name: category.name,
@@ -195,7 +212,7 @@ class PromptMaster < Sinatra::Base
     @tag.to_json
   end
 
-    # delete tag from database and all associated images from disk
+  # delete tag from database and all associated images from disk
   delete "/api/tag/:id" do
     content_type :json
 
