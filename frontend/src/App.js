@@ -25,6 +25,7 @@ import theme from './theme'
 import Filters from './components/filters'
 import Search from './components/search'
 import WildCardBuilder from './components/wildcard-builder'
+import SelectedTags from './components/selected-tags'
 
 // import pages
 import CategoriesPage from './pages/categories'
@@ -111,6 +112,7 @@ function App() {
             }}
           />
           <WildCardBuilder />
+          <SelectedTags />
           <Divider type="vertical" />
           <Search />
         </Header>

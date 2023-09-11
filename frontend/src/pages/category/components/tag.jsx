@@ -1,5 +1,5 @@
 // Tag card with images carousel name and actin buttons
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useResponsive } from 'ahooks';
 
 import {
@@ -27,19 +27,23 @@ import {
   faCartArrowDown,
   faTags,
   faPlus,
+  faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faHeart as faHeartRegular,
   faEyeSlash as faEyeSlashRegular,
+  faCheckCircle as faCheckCircleRegular,
 } from '@fortawesome/free-regular-svg-icons';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { getImageSize, getColumns } from '../../../utils';
 import {
   useUpdateTag,
   useDeleteTag,
   useTagImagesNames,
-  useIndex
+  useIndex,
+  useSelectedTags,
+  useSelectTag
 } from '../store';
 
 // theme
@@ -67,6 +71,20 @@ const Tag = (props) => {
   const columns = useMemo(() => getColumns(breakpoints), [breakpoints]);
   const imageSize = useMemo(() => getImageSize(image_size, columns), [image_size, columns]);
   const [previewVisible, setPreviewVisible] = useState(false);
+
+  const selectTag = useSelectTag();
+  const selectedTags = useSelectedTags();
+  const [selected, setSelected] = useState(false);
+
+  useEffect(() => {
+    const isSelected = selectedTags.find((selectedTag) => selectedTag.id === id);
+    if (isSelected && !selected) {
+      setSelected(true);
+    } else if (!isSelected && selected) {
+      setSelected(false);
+    }
+  }, [selectedTags, id]);
+
   // copy tag name to clipboard
   const [copied, setCopied] = useState(false);
   const copyHandler = () => {
@@ -122,7 +140,10 @@ const Tag = (props) => {
     }
   }, [columns]);
 
-  const title = () => (<Tooltip title={name} placement="bottom"><Typography.Title level={level}>{renderName()}</Typography.Title></Tooltip>);
+  const title = () => (
+    <Tooltip title={name} placement="bottom">
+      <Typography.Title level={level}>{renderName()}</Typography.Title>
+    </Tooltip>);
 
   // Rating component
   const updateRating = (rating) => {
@@ -214,13 +235,34 @@ const Tag = (props) => {
     );
   }
 
+  const hideHandler = () => {
+    updateTag({ ...tag, active: !active });
+  };
+
   const HideButton = () => {
     const icon = active ? faEyeSlashRegular : faEyeSlashSolid;
     const title = active ? 'Hide' : 'Show';
     const color = active ? colorPrimary : colorQuaternary;
 
+    return (
+      <Tooltip title={title} placement="bottom">
+        <div>
+          <FontAwesomeIcon
+            icon={icon}
+            style={{ cursor: 'pointer', color }}
+          />
+        </div>
+      </Tooltip>
+    );
+  }
+
+  const SelectButton = () => {
+    const icon = selected ? faCheckCircle : faCheckCircleRegular;
+    const title = selected ? 'Deselect' : 'Select';
+    const color = selected ? colorQuaternary : colorPrimary;
+
     const onClick = () => {
-      updateTag({ ...tag, active: !active });
+      selectTag(tag);
     };
     return (
       <Tooltip title={title} placement="bottom">
@@ -268,6 +310,20 @@ const Tag = (props) => {
         icon: <FontAwesomeIcon icon={faTrash} />,
         danger: true,
       },
+      {
+        key: 'hide',
+        label: (
+          <Button
+          type="text"
+          block
+          size="small"
+          >
+          {active ? 'Hide' : 'Show'} tag
+          </Button>
+        ),
+        icon: <HideButton />,
+        onClick: hideHandler,
+      }
       // {
       //   key: 'add-tag',
       //   label: (
@@ -319,8 +375,9 @@ const Tag = (props) => {
   // Actions buttons collection
   const actions = [
     <CopyButton />,
+    <SelectButton />,
     <FavoriteButton />,
-    <HideButton />,
+    // <HideButton />,
     <SettingsButton />,
   ];
 

@@ -170,6 +170,7 @@ export const useTagsStore = create((set, get) => ({
   tags: [],
   tagsUnsorted: [],
   tagImagesNames: [],
+  selectedTags: [],
   isLoading: false,
   isLoaded: false,
   setTags: (tags) => set({ tags }),
@@ -221,6 +222,15 @@ export const useTagsStore = create((set, get) => ({
   resetOrderBy: () => {
     set({ order_by: initialOrderState })
     get().filterTags()
+  },
+  selectTag: (tag) => {
+    // if tag is already selected, unselect it
+    if (get().selectedTags.includes(tag)) {
+      set({ selectedTags: get().selectedTags.filter((t) => t !== tag) })
+    } else {
+      // else, add it to the selected tags
+      set({ selectedTags: [...get().selectedTags, tag] })
+    }
   },
   unsetTags: () => set({
     tags: [],
@@ -298,6 +308,14 @@ export const useRefilterTags = () => {
 
 export const useTags = () => {
   return useTagsStore(({ tags }) => tags)
+}
+
+export const useSelectedTags = () => {
+  return useTagsStore(({ selectedTags }) => selectedTags)
+}
+
+export const useSelectTag = () => {
+  return useTagsStore(({ selectTag }) => selectTag)
 }
 
 export const useTagsStates = () => {
