@@ -1,3 +1,7 @@
+⚠️ **This project is not receiving any love anymore and is about to be superseded by the online service http://promptmaster.pro 
+PRs are still welcome but I'm not going to implement new features.**
+
+_So Long, and Thanks for All the Fish_
 # Prompt Master
 
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/28090/218661549-b53bdac7-28f4-466c-b538-f8c7b36c90f7.png">
