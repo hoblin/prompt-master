@@ -56,8 +56,7 @@ GEM
     rainbow (3.1.1)
     rake (13.0.6)
     regexp_parser (2.6.2)
-    rexml (3.3.3)
-      strscan
+    rexml (3.3.9)
     rubocop (1.42.0)
       json (~> 2.3)
       parallel (~> 1.10)
@@ -93,7 +92,6 @@ GEM
       language_server-protocol (~> 3.17.0.2)
       rubocop (= 1.42.0)
       rubocop-performance (= 1.15.2)
-    strscan (3.1.0)
     tilt (2.0.11)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
