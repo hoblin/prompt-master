@@ -21,4 +21,5 @@ gem "pry", "~> 0.14.1"
 group :development do
   gem "standard", "~> 1.52"
   gem "foreman", "~> 0.87.2"
+  gem "bundler-audit", "~> 0.9"
 end
