@@ -1,7 +1,7 @@
 require "rack/unreloader"
 require_relative "prompt_master"
 
-use Rack::Logger
+use Rack::CommonLogger
 
 Unreloader = Rack::Unreloader.new { PromptMaster }
 Unreloader.require "lib/*.rb"
