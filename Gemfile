@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gem "sinatra", "~> 3.0"
+gem "sinatra", "~> 4.2"
 gem "puma", "~> 6.4"
 gem "pg", "~> 1.5"
 gem "sequel", "~> 5.68"
@@ -14,11 +14,11 @@ gem "activerecord", "~> 7.0.4.3"
 gem "sinatra-activerecord", "~> 2.0.26"
 gem "sqlite3", "~> 1.6"
 gem "rake", "~> 13.0"
-gem "rack", "~> 2.2.8"
+gem "rack", "~> 3.2.4"
 gem "rack-unreloader", "~> 2.0"
 gem "pry", "~> 0.14.1"
 
 group :development do
-  gem "standard", "~> 1.20"
+  gem "standard", "~> 1.52"
   gem "foreman", "~> 0.87.2"
 end
