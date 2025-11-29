@@ -28,7 +28,7 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^6.4.5",
+    "@craco/craco": "^7.1.0",
     "@welldone-software/why-did-you-render": "^7.0.1"
   },
   "dependencies": {
@@ -38,7 +38,6 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "ahooks": "^3.7.4",
     "antd": "^5.1.7",
-    "craco-antd": "^2.0.0",
     "fuse.js": "^6.6.2",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
