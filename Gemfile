@@ -14,7 +14,7 @@ gem "activerecord", "~> 7.1.5.2"
 gem "sinatra-activerecord", "~> 2.0.26"
 gem "sqlite3", "~> 1.6"
 gem "rake", "~> 13.0"
-gem "rack", "~> 3.2.4"
+gem "rack", "~> 3.2.5"
 gem "rack-unreloader", "~> 2.0"
 gem "pry", "~> 0.14.1"
 
