@@ -72,7 +72,7 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.2.4)
+    rack (3.2.5)
     rack-protection (4.2.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
@@ -158,7 +158,7 @@ DEPENDENCIES
   pg (~> 1.5)
   pry (~> 0.14.1)
   puma (~> 6.4)
-  rack (~> 3.2.4)
+  rack (~> 3.2.5)
   rack-unreloader (~> 2.0)
   rake (~> 13.0)
   rufus-scheduler (~> 3.8)
@@ -208,7 +208,7 @@ CHECKSUMS
   puma (6.4.3) sha256=24a4645c006811d83f2480057d1f54a96e7627b6b90e1c99b260b9dc630eb43e
   raabro (1.4.0) sha256=d4fa9ff5172391edb92b242eed8be802d1934b1464061ae5e70d80962c5da882
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
-  rack (3.2.4) sha256=5d74b6f75082a643f43c1e76b419c40f0e5527fcfee1e669ac1e6b73c0ccb6f6
+  rack (3.2.5) sha256=4cbd0974c0b79f7a139b4812004a62e4c60b145cba76422e288ee670601ed6d3
   rack-protection (4.2.1) sha256=cf6e2842df8c55f5e4d1a4be015e603e19e9bc3a7178bae58949ccbb58558bac
   rack-session (2.1.1) sha256=0b6dc07dea7e4b583f58a48e8b806d4c9f1c6c9214ebc202ec94562cbea2e4e9
   rack-unreloader (2.1.0) sha256=18879cf2ced8ca21a01836bca706f65cce6ebe3f7d9d8a5157ce68ca62c7263a
